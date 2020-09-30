@@ -9,3 +9,6 @@ SOURCES += \
 HEADERS += \
     loginpage.h \
     signupform.h
+
+DISTFILES += \
+    users.json

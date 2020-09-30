@@ -45,6 +45,7 @@ public slots:
 
 private:
     bool validateEmail(QString email);
+    bool checkUsername(QString username);
 signals:
 };
 

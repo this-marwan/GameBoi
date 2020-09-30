@@ -105,9 +105,9 @@ void signUpForm::signUp()
     this->error->setText(""); //empty text field if it was filled before
     QString error; //stores our errors to display to the user
 
-    QString username = this->userName->text();
+    QString username = this->userNameField->text();
     if (username.isEmpty()) { error += "Fill in your username please\n"; }
-
+    if (!checkUsername(username)) { error += "username already taken\n"; }
 
     QString fname = this->firstNameField->text();
     if (fname.isEmpty()) { error += "Fill in your first name please\n"; }
@@ -147,9 +147,39 @@ void signUpForm::signUp()
       }
     }
 
-    if(!error.isEmpty()){
-        //success
-        //write to files
+    if(error.isEmpty()){
+    //add new user to the users map in json file
+        QString val;
+        QFile file;
+        file.setFileName("../gameOne/users.json");
+        file.open(QIODevice::ReadWrite | QIODevice::Text);
+        val = file.readAll();
+
+        QJsonDocument doc;
+        doc = QJsonDocument::fromJson(val.toUtf8());
+
+        //create new user json object
+        QJsonObject newUser;
+        newUser["first_name"] = fname;
+        newUser["last_name"] = lname;
+        newUser["birthdate"] = dateOfBirth.toString();
+        newUser["email"] = email;
+        newUser["gender"] = gender;
+        newUser["username"] = username;
+        newUser["password"] = password;
+
+
+        QJsonObject RootObject = doc.object();
+        QJsonObject usersObject = RootObject["users"].toObject();
+
+
+        usersObject.insert(username,newUser);
+        RootObject["users"] = usersObject;
+        doc.setObject(RootObject);
+        file.resize(0);
+        file.write(doc.toJson());
+        file.close();
+
     }else
     {
     this->error->setText(error);
@@ -162,4 +192,23 @@ bool signUpForm::validateEmail(QString email){
     mailREX.setCaseSensitivity(Qt::CaseInsensitive);
     mailREX.setPatternSyntax(QRegExp::RegExp);
     return mailREX.exactMatch(email);
+}
+
+bool signUpForm::checkUsername(QString username){
+    QString val;
+    QFile file;
+    file.setFileName("../gameOne/users.json");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = file.readAll();
+    file.close();
+
+    QJsonDocument doc;
+    doc = QJsonDocument::fromJson(val.toUtf8());
+
+    QJsonObject jObj = doc.object();
+    jObj = jObj["users"].toObject();
+    if (jObj.keys().contains(username)){
+        return false;
+    }
+    return true;
 }

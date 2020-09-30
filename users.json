@@ -1,0 +1,28 @@
+{
+    "number_of_users": 10,
+    "users": {
+        "kim": {
+            "birthdate": "Thu Oct 1 2020",
+            "email": "m@",
+            "first_name": "kim",
+            "gender": "Male",
+            "last_name": "possible",
+            "password": "g���M�C��n��hA�-^�p�",
+            "username": "kim"
+        },
+        "marwan": {
+            "birthdate": "23/9/1979",
+            "email": "dummy@mail.com",
+            "first_name": "marwan",
+            "games": {
+                "COD": {
+                    "highscore": 10,
+                    "level": 3
+                }
+            },
+            "last_name": "gh"
+        },
+        "salah": {
+        }
+    }
+}
