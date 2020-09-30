@@ -3,8 +3,10 @@
 signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
 {
 
-    finishButton = new QPushButton("Finish");
-    refreshButton = new QPushButton("Refresh");
+    submitButton = new QPushButton("Submit");
+
+    userName = new QLabel("Username");
+    userNameField = new QLineEdit();
 
     firstName = new QLabel("First Name");
     firstNameField = new QLineEdit();
@@ -12,22 +14,22 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     lastName = new QLabel("Last Name");
     lastNameField = new QLineEdit();
 
-    dateOfBirth = new QLabel("Enter your birthdate");
+    dateOfBirth = new QLabel("Birthdate");
     dateField = new QDateEdit(); //fix this to show more verbose date
+
+    profilePic = new QLabel("Profile Pic ");
+    profilePicField = new QLineEdit();
 
     gender = new QLabel("Gender");
     genderFieldMale = new QRadioButton("Male");
     genderFieldFemale = new QRadioButton("Female");
 
-    username = new QLabel("Username");
-    usernameField = new QLineEdit();
+    password = new QLabel("Password");
+    passwordField = new QLineEdit();
+    passwordField->setEchoMode(QLineEdit::Password);
 
     email = new QLabel("Email");
     emailField = new QLineEdit();
-
-    password = new QLabel("Password");
-    passwordField = new QLineEdit();
-
 
     textField = new QTextEdit();
 
@@ -36,35 +38,51 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     topGrid = new QGridLayout;
 
     //start of top grid
-    topGrid->addWidget(firstName,0,0);
-    topGrid->addWidget(firstNameField,0,1);
+
+    topGrid->addWidget(userName,0,0);
+    topGrid->addWidget(userNameField,0,1);
+
+    topGrid->addWidget(firstName,1,0);
+    topGrid->addWidget(firstNameField,1,1);
 
     topGrid->addItem(new QSpacerItem(40,10),0,2,1,1); //add a spacer between age and rest of widgets
 
-    topGrid->addWidget(dateOfBirth,0,3);
-    topGrid->addWidget(dateField,0,4);
+    topGrid->addWidget(dateOfBirth,2,3);
+    topGrid->addWidget(dateField,2,4);
 
-    topGrid->addWidget(lastName,1,0);
-    topGrid->addWidget(lastNameField,1,1);
+    topGrid->addWidget(lastName,2,0);
+    topGrid->addWidget(lastNameField,2,1);
 
-    topGrid->addWidget(gender,2,0);
+    topGrid->addWidget(password,3,0);
+    topGrid->addWidget(passwordField,3,1);
+
+    topGrid->addWidget(email,0,3);
+    topGrid->addWidget(emailField,0,4);
+
+    topGrid->addWidget(gender,4,3);
     //vertical box for radio buttons
     radioV->addWidget(genderFieldMale,0,0);
     radioV->addWidget(genderFieldFemale,1,0);
     //end of vertical box for radio buttons
-    topGrid->addItem(radioV, 2, 1);
+    topGrid->addItem(radioV, 4, 4);
 
-    topGrid->addWidget(refreshButton,3,0);
+    topGrid->addWidget(profilePic,1,3);
+    topGrid->addWidget(profilePicField,1,4);
+
+
+
+    topGrid->addWidget(submitButton,4,0);
+
     //end of top grid
 
     //combine all three main elements in vertical box
     mainV->addItem(topGrid);
     mainV->addWidget(textField);
-    mainV->addWidget(finishButton);
+    //mainV->addWidget(submitButton);
 
     setLayout(mainV);
 
-    QObject::connect(refreshButton, SIGNAL(clicked(bool)), this, SLOT(signUp()));
+    //QObject::connect(refreshButton, SIGNAL(clicked(bool)), this, SLOT(signUp()));
 
 }
 
