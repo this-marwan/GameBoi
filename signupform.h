@@ -17,6 +17,7 @@ public:
     QLabel* gender;
     QLabel* email;
     QLabel* password;
+    QLabel* confirmPassword;
     QLabel* profilePic;
 
     QLineEdit* userNameField;
@@ -24,9 +25,10 @@ public:
     QLineEdit* lastNameField;
     QLineEdit* emailField;
     QLineEdit* passwordField;
+    QLineEdit* confirmPasswordField;
     QLineEdit* profilePicField;
 
-    QDateEdit* dateField;
+    QCalendarWidget* dateField;
     QRadioButton* genderFieldMale;
     QRadioButton* genderFieldFemale;
 
@@ -41,6 +43,8 @@ public:
 public slots:
     void signUp();
 
+private:
+    bool validateEmail(QString email);
 signals:
 };
 

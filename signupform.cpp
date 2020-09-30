@@ -1,4 +1,5 @@
 #include "signupform.h"
+#include <QCryptographicHash>
 
 signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
 {
@@ -15,7 +16,7 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     lastNameField = new QLineEdit();
 
     dateOfBirth = new QLabel("Birthdate");
-    dateField = new QDateEdit(); //fix this to show more verbose date
+    dateField = new QCalendarWidget(); //fix this to show more verbose date
 
     profilePic = new QLabel("Profile Pic ");
     profilePicField = new QLineEdit();
@@ -27,6 +28,10 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     password = new QLabel("Password");
     passwordField = new QLineEdit();
     passwordField->setEchoMode(QLineEdit::Password);
+
+    confirmPassword = new QLabel("Confirm Password");
+    confirmPasswordField = new QLineEdit();
+    confirmPasswordField->setEchoMode(QLineEdit::Password);
 
     email = new QLabel("Email");
     emailField = new QLineEdit();
@@ -56,6 +61,9 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     topGrid->addWidget(password,3,0);
     topGrid->addWidget(passwordField,3,1);
 
+    topGrid->addWidget(confirmPassword,4,0);
+    topGrid->addWidget(confirmPasswordField,4,1);
+
     topGrid->addWidget(email,0,3);
     topGrid->addWidget(emailField,0,4);
 
@@ -82,7 +90,7 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
 
     setLayout(mainV);
 
-    //QObject::connect(refreshButton, SIGNAL(clicked(bool)), this, SLOT(signUp()));
+    QObject::connect(submitButton, SIGNAL(clicked(bool)), this, SLOT(signUp()));
 
 }
 
@@ -90,23 +98,47 @@ void signUpForm::signUp()
 {
     //check this for JSON interactions : https://stackoverflow.com/questions/15893040/how-to-create-read-write-json-files-in-qt5
     //check if username exists - this must be unqiue
-    //validate email
     //check necessary fileds are filled
-    //check password for requirements
-    QString error;
+
+    this->textField->setText(""); //empty text field if it was filled before
+    QString error; //stores our errors to display to the user
 
     QString fname = this->firstNameField->text();
     if (fname.isEmpty()) { error += "Fill in your first name please\n"; }
     QString lname = this->lastNameField->text();
     if (lname.isEmpty()) { error += "Fill in your last name please\n"; }
-    QString dateOfBirth = this->dateField->text();
-    QString gender = "Unspecified";
 
+    QDate dateOfBirth = this->dateField->selectedDate();
+
+    QString gender = "Unspecified";
     if (this->genderFieldMale->isChecked()){
         gender = "Male";
     }
     else if (this->genderFieldFemale->isChecked()){
         gender = "Female";
+    }
+
+    QString email = this->emailField->text();
+    //validate email
+    if (!validateEmail(email)) { error += "Please insert a valid email\n"; }
+
+    //check password for requirements
+    QRegExp passREX("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}$");
+    passREX.setPatternSyntax(QRegExp::RegExp);
+
+    QString password = this->passwordField->text();
+    if ( (password == this->confirmPasswordField->text())
+         && passREX.exactMatch(password)) {
+    QCryptographicHash *hash = new QCryptographicHash(QCryptographicHash::Sha1);
+    hash->addData(password.toUtf8());
+    password = hash->result();
+    }
+    else {
+      if ((password == this->confirmPasswordField->text())) {
+       error += "Invalid password; password should consist of at least 8 characters and contain at least one number, upper and lower case letters\n";
+       }else{
+       error += "passwords don't match";
+      }
     }
 
     if(error.isEmpty()){
@@ -117,3 +149,10 @@ void signUpForm::signUp()
     this->textField->setText(error);
     }
 };
+
+bool signUpForm::validateEmail(QString email){
+    QRegExp mailREX("\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b");
+    mailREX.setCaseSensitivity(Qt::CaseInsensitive);
+    mailREX.setPatternSyntax(QRegExp::RegExp);
+    return mailREX.exactMatch(email);
+}
