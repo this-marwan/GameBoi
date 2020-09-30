@@ -32,7 +32,7 @@ public:
     QRadioButton* genderFieldMale;
     QRadioButton* genderFieldFemale;
 
-    QTextEdit* textField;
+    QLabel* error;
 
     QPushButton* submitButton;
 

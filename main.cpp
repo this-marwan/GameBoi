@@ -1,12 +1,12 @@
 #include <QApplication>
 #include <signupform.h>
-//#include <mainmenu.h>
+#include <loginpage.h>
 
 int main(int argc, char **argv)
 {
     QApplication app (argc, argv);
-//    mainMenu widow;
-    signUpForm window;
+
+    loginPage window;
     window.show();
     return app.exec();
 }

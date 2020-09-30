@@ -1,5 +1,6 @@
 #include "signupform.h"
 #include <QCryptographicHash>
+#include <qjsondocument.h>
 
 signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
 {
@@ -36,7 +37,9 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     email = new QLabel("Email");
     emailField = new QLineEdit();
 
-    textField = new QTextEdit();
+    error = new QLabel();
+    error->setStyleSheet("QLabel {color : red;}");
+    error->setVisible(false);
 
     mainV = new QVBoxLayout;
     radioV = new QVBoxLayout;
@@ -85,7 +88,7 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
 
     //combine all three main elements in vertical box
     mainV->addItem(topGrid);
-    mainV->addWidget(textField);
+    mainV->addWidget(error);
     //mainV->addWidget(submitButton);
 
     setLayout(mainV);
@@ -98,10 +101,13 @@ void signUpForm::signUp()
 {
     //check this for JSON interactions : https://stackoverflow.com/questions/15893040/how-to-create-read-write-json-files-in-qt5
     //check if username exists - this must be unqiue
-    //check necessary fileds are filled
 
-    this->textField->setText(""); //empty text field if it was filled before
+    this->error->setText(""); //empty text field if it was filled before
     QString error; //stores our errors to display to the user
+
+    QString username = this->userName->text();
+    if (username.isEmpty()) { error += "Fill in your username please\n"; }
+
 
     QString fname = this->firstNameField->text();
     if (fname.isEmpty()) { error += "Fill in your first name please\n"; }
@@ -141,12 +147,13 @@ void signUpForm::signUp()
       }
     }
 
-    if(error.isEmpty()){
+    if(!error.isEmpty()){
         //success
-        //write to file
+        //write to files
     }else
     {
-    this->textField->setText(error);
+    this->error->setText(error);
+    this->error->setVisible(true);
     }
 };
 
