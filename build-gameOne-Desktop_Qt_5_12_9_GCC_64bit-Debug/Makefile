@@ -52,12 +52,17 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../main.cpp \
-		../signupform.cpp moc_signupform.cpp
-OBJECTS       = main.o \
+SOURCES       = ../loginpage.cpp \
+		../main.cpp \
+		../signupform.cpp moc_loginpage.cpp \
+		moc_signupform.cpp
+OBJECTS       = loginpage.o \
+		main.o \
 		signupform.o \
+		moc_loginpage.o \
 		moc_signupform.o
-DIST          = ../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_pre.prf \
+DIST          = ../users.json \
+		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/common/unix.conf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/common/linux.conf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/common/sanitize.conf \
@@ -216,6 +221,7 @@ DIST          = ../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_post.prf \
+		../.qmake.stash \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/default_pre.prf \
@@ -235,7 +241,9 @@ DIST          = ../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/exceptions.prf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/lex.prf \
-		../../gameOne.pro ../signupform.h ../main.cpp \
+		../../gameOne.pro ../loginpage.h \
+		../signupform.h ../loginpage.cpp \
+		../main.cpp \
 		../signupform.cpp
 QMAKE_TARGET  = gameOne
 DESTDIR       = 
@@ -407,6 +415,7 @@ Makefile: ../gameOne.pro ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_pre.
 		../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/qt_config.prf \
 		../../Qt5.12.9/5.12.9/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/toolchain.prf \
 		../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/default_pre.prf \
@@ -587,6 +596,7 @@ Makefile: ../gameOne.pro ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_pre.
 ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/qt_config.prf:
 ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/toolchain.prf:
 ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/default_pre.prf:
@@ -622,8 +632,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../signupform.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../signupform.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../loginpage.h ../signupform.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../loginpage.cpp ../main.cpp ../signupform.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -655,9 +665,120 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h ../../Qt5.12.9/5.12.9/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_signupform.cpp
+compiler_moc_header_make_all: moc_loginpage.cpp moc_signupform.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_signupform.cpp
+	-$(DEL_FILE) moc_loginpage.cpp moc_signupform.cpp
+moc_loginpage.cpp: ../loginpage.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/QObject \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qglobal.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qconfig.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtcore-config.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlogging.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qflags.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmutex.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qversiontagging.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstring.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qchar.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringliteral.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringview.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlist.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiterator.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qhashfunctions.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qpair.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qregexp.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringmatcher.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/QWidget \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtguiglobal.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtgui-config.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmargins.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qrect.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsize.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qpoint.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpalette.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qcolor.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qrgb.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qrgba64.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qbrush.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvector.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qregion.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qline.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtransform.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qimage.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qhash.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qfont.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qcursor.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qevent.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvariant.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmap.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdebug.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlocale.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qset.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qurl.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfile.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtouchdevice.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets \
+		../signupform.h \
+		moc_predefs.h \
+		../../Qt5.12.9/5.12.9/gcc_64/bin/moc
+	/home/eece435l/Qt5.12.9/5.12.9/gcc_64/bin/moc $(DEFINES) --include /home/eece435l/gameboi-3/build-gameOne-Desktop_Qt_5_12_9_GCC_64bit-Debug/moc_predefs.h -I/home/eece435l/Qt5.12.9/5.12.9/gcc_64/mkspecs/linux-g++ -I/home/eece435l/gameboi-3 -I/home/eece435l/Qt5.12.9/5.12.9/gcc_64/include -I/home/eece435l/Qt5.12.9/5.12.9/gcc_64/include/QtWidgets -I/home/eece435l/Qt5.12.9/5.12.9/gcc_64/include/QtGui -I/home/eece435l/Qt5.12.9/5.12.9/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../loginpage.h -o moc_loginpage.cpp
+
 moc_signupform.cpp: ../signupform.h \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/QObject \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject.h \
@@ -784,6 +905,115 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
+loginpage.o: ../loginpage.cpp ../loginpage.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/QObject \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qglobal.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qconfig.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtcore-config.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlogging.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qflags.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmutex.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qversiontagging.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstring.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qchar.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringliteral.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringview.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlist.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiterator.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qhashfunctions.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qpair.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qregexp.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qstringmatcher.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/QWidget \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtguiglobal.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtgui-config.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmargins.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qrect.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsize.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qpoint.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpalette.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qcolor.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qrgb.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qrgba64.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qbrush.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvector.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qregion.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qline.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtransform.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qimage.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qhash.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qfont.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qcursor.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qevent.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qvariant.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qmap.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qdebug.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qlocale.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qset.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qurl.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfile.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtouchdevice.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets \
+		../signupform.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o loginpage.o ../loginpage.cpp
+
 main.o: ../main.cpp ../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/QApplication \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qapplication.h \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -896,7 +1126,8 @@ main.o: ../main.cpp ../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/QApplication 
 		../signupform.h \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/QObject \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets/QWidget \
-		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets \
+		../loginpage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
 signupform.o: ../signupform.cpp ../signupform.h \
@@ -1004,8 +1235,16 @@ signupform.o: ../signupform.cpp ../signupform.h \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qfiledevice.h \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qvector2d.h \
 		../../Qt5.12.9/5.12.9/gcc_64/include/QtGui/qtouchdevice.h \
-		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtWidgets \
+		../loginpage.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/QCryptographicHash \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qcryptographichash.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qjsondocument.h \
+		../../Qt5.12.9/5.12.9/gcc_64/include/QtCore/qjsonvalue.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signupform.o ../signupform.cpp
+
+moc_loginpage.o: moc_loginpage.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_loginpage.o moc_loginpage.cpp
 
 moc_signupform.o: moc_signupform.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_signupform.o moc_signupform.cpp

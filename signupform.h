@@ -35,12 +35,14 @@ public:
     QLabel* error;
 
     QPushButton* submitButton;
+    QPushButton* backButton;
 
     QVBoxLayout* mainV;
     QVBoxLayout* radioV;
     QGridLayout* topGrid;
 
 public slots:
+    void goBack();
     void signUp();
 
 private:

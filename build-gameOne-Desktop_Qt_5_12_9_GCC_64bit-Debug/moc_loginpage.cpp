@@ -1,16 +1,16 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'signupform.h'
+** Meta object code from reading C++ file 'loginpage.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.9)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../signupform.h"
+#include "../loginpage.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'signupform.h' doesn't include <QObject>."
+#error "The header file 'loginpage.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.12.9. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -20,28 +20,28 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_signUpForm_t {
+struct qt_meta_stringdata_loginPage_t {
     QByteArrayData data[4];
-    char stringdata0[26];
+    char stringdata0[25];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_signUpForm_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_loginPage_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_signUpForm_t qt_meta_stringdata_signUpForm = {
+static const qt_meta_stringdata_loginPage_t qt_meta_stringdata_loginPage = {
     {
-QT_MOC_LITERAL(0, 0, 10), // "signUpForm"
-QT_MOC_LITERAL(1, 11, 6), // "goBack"
-QT_MOC_LITERAL(2, 18, 0), // ""
-QT_MOC_LITERAL(3, 19, 6) // "signUp"
+QT_MOC_LITERAL(0, 0, 9), // "loginPage"
+QT_MOC_LITERAL(1, 10, 6), // "signIn"
+QT_MOC_LITERAL(2, 17, 0), // ""
+QT_MOC_LITERAL(3, 18, 6) // "signUp"
 
     },
-    "signUpForm\0goBack\0\0signUp"
+    "loginPage\0signIn\0\0signUp"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_signUpForm[] = {
+static const uint qt_meta_data_loginPage[] = {
 
  // content:
        8,       // revision
@@ -65,13 +65,13 @@ static const uint qt_meta_data_signUpForm[] = {
        0        // eod
 };
 
-void signUpForm::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void loginPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<signUpForm *>(_o);
+        auto *_t = static_cast<loginPage *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->goBack(); break;
+        case 0: _t->signIn(); break;
         case 1: _t->signUp(); break;
         default: ;
         }
@@ -79,30 +79,30 @@ void signUpForm::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject signUpForm::staticMetaObject = { {
+QT_INIT_METAOBJECT const QMetaObject loginPage::staticMetaObject = { {
     &QWidget::staticMetaObject,
-    qt_meta_stringdata_signUpForm.data,
-    qt_meta_data_signUpForm,
+    qt_meta_stringdata_loginPage.data,
+    qt_meta_data_loginPage,
     qt_static_metacall,
     nullptr,
     nullptr
 } };
 
 
-const QMetaObject *signUpForm::metaObject() const
+const QMetaObject *loginPage::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *signUpForm::qt_metacast(const char *_clname)
+void *loginPage::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_signUpForm.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_loginPage.stringdata0))
         return static_cast<void*>(this);
     return QWidget::qt_metacast(_clname);
 }
 
-int signUpForm::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int loginPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)

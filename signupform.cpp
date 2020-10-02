@@ -1,4 +1,5 @@
 #include "signupform.h"
+#include "loginpage.h"
 #include <QCryptographicHash>
 #include <qjsondocument.h>
 
@@ -6,6 +7,7 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
 {
 
     submitButton = new QPushButton("Submit");
+    backButton = new QPushButton("Back");
 
     userName = new QLabel("Username");
     userNameField = new QLineEdit();
@@ -53,10 +55,8 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     topGrid->addWidget(firstName,1,0);
     topGrid->addWidget(firstNameField,1,1);
 
-    topGrid->addItem(new QSpacerItem(40,10),0,2,1,1); //add a spacer between age and rest of widgets
-
-    topGrid->addWidget(dateOfBirth,2,3);
-    topGrid->addWidget(dateField,2,4);
+    topGrid->addWidget(dateOfBirth,8,0);
+    topGrid->addWidget(dateField,8,1);
 
     topGrid->addWidget(lastName,2,0);
     topGrid->addWidget(lastNameField,2,1);
@@ -67,22 +67,36 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     topGrid->addWidget(confirmPassword,4,0);
     topGrid->addWidget(confirmPasswordField,4,1);
 
-    topGrid->addWidget(email,0,3);
-    topGrid->addWidget(emailField,0,4);
+    topGrid->addWidget(email,5,0);
+    topGrid->addWidget(emailField,5,1);
 
-    topGrid->addWidget(gender,4,3);
+    topGrid->addWidget(gender,7,0);
     //vertical box for radio buttons
     radioV->addWidget(genderFieldMale,0,0);
     radioV->addWidget(genderFieldFemale,1,0);
     //end of vertical box for radio buttons
-    topGrid->addItem(radioV, 4, 4);
+    topGrid->addItem(radioV, 7, 1);
 
-    topGrid->addWidget(profilePic,1,3);
-    topGrid->addWidget(profilePicField,1,4);
+    topGrid->addWidget(profilePic,6,0);
+    topGrid->addWidget(profilePicField,6,1);
 
 
 
-    topGrid->addWidget(submitButton,4,0);
+    topGrid->addWidget(backButton,10,0);
+    topGrid->addWidget(submitButton,9,0);
+
+    topGrid->addItem(new QSpacerItem(0,40),0,0);
+    topGrid->addItem(new QSpacerItem(0,40),1,1);
+    topGrid->addItem(new QSpacerItem(0,40),2,2);
+    topGrid->addItem(new QSpacerItem(0,40),3,3);
+    topGrid->addItem(new QSpacerItem(0,40),4,4);
+    topGrid->addItem(new QSpacerItem(0,40),5,5);
+    topGrid->addItem(new QSpacerItem(0,40),6,6);
+    topGrid->addItem(new QSpacerItem(0,80),7,7);
+    topGrid->addItem(new QSpacerItem(0,150),8,8);
+    topGrid->addItem(new QSpacerItem(0,40),9,9);
+
+
 
     //end of top grid
 
@@ -94,6 +108,7 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     setLayout(mainV);
 
     QObject::connect(submitButton, SIGNAL(clicked(bool)), this, SLOT(signUp()));
+    QObject::connect(backButton, SIGNAL(clicked(bool)), this, SLOT(goBack()));
 
 }
 
@@ -211,4 +226,10 @@ bool signUpForm::checkUsername(QString username){
         return false;
     }
     return true;
+}
+
+void signUpForm::goBack(){
+    loginPage *window1 = new loginPage;
+    window1->show();
+    this->hide();
 }

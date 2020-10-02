@@ -59,9 +59,10 @@ void loginPage::signIn()
 
 void loginPage::signUp()
 {
-    //take to you to the sign up page
-//    signUpPage->show();
-//    this->hide();
+    signUpForm *window1 = new signUpForm;
+    window1->show();
+    this->hide();
+
 };
 
 
