@@ -4,22 +4,41 @@
 #include <QObject>
 #include <QWidget>
 
-class user
+class user : public QObject
 {
     Q_OBJECT
-public:
+    public:
+    QString firstName;
+    QString lastName;
+
+    QString username;
+    QString password;
+
+    QString birthdate;
+    QString gender;
+    QString email;
+    QString profilePicture;
+
     user();
 
-    String firstName;
-    String lastNames;
-
-    String username;
-    String password;
-
-    String birthdate;
-    String gender;
-    String email;
-    String profilePicture;
+    user(QString firstName,
+    QString lastName,
+    QString username,
+    QString password,
+    QString birthdate,
+    QString gender,
+    QString email,
+    QString profilePicture)
+    {
+       this->firstName = firstName;
+       this->lastName = lastName;
+       this->username = username;
+       this->password = password;
+       this->birthdate = birthdate;
+       this->gender = gender;
+       this->email = email;
+       this->profilePicture = profilePicture;
+    };
 
     int highScore;
 };

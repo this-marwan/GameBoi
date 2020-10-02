@@ -34,6 +34,7 @@ public:
 
     QLabel* error;
 
+    QPushButton* browseButton;
     QPushButton* submitButton;
     QPushButton* backButton;
 
@@ -44,6 +45,7 @@ public:
 public slots:
     void goBack();
     void signUp();
+    void browsePic();
 
 private:
     bool validateEmail(QString email);

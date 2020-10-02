@@ -1,6 +1,7 @@
 #include "signupform.h"
 #include "loginpage.h"
 #include "welcomepage.h"
+#include "user.h"
 #include <QCryptographicHash>
 #include <qjsondocument.h>
 
@@ -9,6 +10,8 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
 
     submitButton = new QPushButton("Submit");
     backButton = new QPushButton("Back");
+    browseButton = new QPushButton("Browse");
+
 
     userName = new QLabel("Username");
     userNameField = new QLineEdit();
@@ -79,7 +82,8 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     topGrid->addItem(radioV, 7, 1);
 
     topGrid->addWidget(profilePic,6,0);
-    topGrid->addWidget(profilePicField,6,1);
+    topGrid->addWidget(browseButton,6,1);
+
 
 
     topGrid->addItem(new QSpacerItem(0,40),0,0);
@@ -105,9 +109,19 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     this->resize(this->width(), 30);
     QObject::connect(submitButton, SIGNAL(clicked(bool)), this, SLOT(signUp()));
     QObject::connect(backButton, SIGNAL(clicked(bool)), this, SLOT(goBack()));
+    QObject::connect(browseButton, SIGNAL(clicked(bool)), this, SLOT(browsePic()));
+
 
 }
 
+void signUpForm::browsePic()
+{
+
+    profilePicField->setText(
+        QFileDialog::getOpenFileName(this, "Open a file", "directoryToOpen",
+            "Images (*.png *.jpg *jpeg);;"));
+
+}
 void signUpForm::signUp()
 {
     //check this for JSON interactions : https://stackoverflow.com/questions/15893040/how-to-create-read-write-json-files-in-qt5
@@ -152,11 +166,12 @@ void signUpForm::signUp()
     }
     else {
       if ((password == this->confirmPasswordField->text())) {
-       error += "Invalid password; password should consist of at least 8 characters and contain at \n least one number, upper and lower case letters\n";
+       error += "Invalid password; password should consist of at least 8 characters and contain at\nleast one number, upper and lower case letters\n";
        }else{
        error += "passwords don't match";
       }
     }
+
 
     if(error.isEmpty()){
     //add new user to the users map in json file
@@ -169,6 +184,36 @@ void signUpForm::signUp()
         QJsonDocument doc;
         doc = QJsonDocument::fromJson(val.toUtf8());
 
+
+        QString finalProfilePicture;
+       if(profilePicField->text().isEmpty()) {
+           finalProfilePicture = ":/static_images/default_pp.png";
+       }
+       else {
+
+           QFileInfo profilePic(profilePicField->text());
+           QString newPath = QDir::currentPath();
+
+           newPath.append("/userProfilePic");
+           if (!QDir(newPath).exists())
+              { //create the folder if it doesn't exist
+               QDir().mkdir(newPath);
+           }
+           newPath.append("/" + username+ "." + profilePic.suffix());
+
+           //create a copy of the image for the profile pic
+           if (QFile::exists(newPath)) //if a file in the same exists remove it
+               { QFile::remove(newPath); }
+
+           QFile::copy(profilePicField->text(), newPath);
+
+           finalProfilePicture = newPath;
+       }
+
+       qDebug() << finalProfilePicture;
+
+
+
         //create new user json object
         QJsonObject newUser;
         newUser["first_name"] = fname;
@@ -178,7 +223,7 @@ void signUpForm::signUp()
         newUser["gender"] = gender;
         newUser["username"] = username;
         newUser["password"] = password;
-
+        newUser["profile_picture"] = finalProfilePicture;
 
         QJsonObject RootObject = doc.object();
         QJsonObject usersObject = RootObject["users"].toObject();
@@ -191,7 +236,19 @@ void signUpForm::signUp()
         file.write(doc.toJson());
         file.close();
 
-        welcomePage *window1 = new welcomePage;
+        //create a user object and pass it to the welcome page
+         user* activeUser;
+         activeUser = new user(
+                     fname,
+                     lname,
+                     username,
+                     password,
+                     dateOfBirth.toString(),
+                     gender,
+                     email,
+                     finalProfilePicture);
+
+        welcomePage *window1 = new welcomePage(activeUser);
         window1->show();
         this->close();
 

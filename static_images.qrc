@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>static_images/default_pp.png</file>
+    </qresource>
+</RCC>

@@ -72,9 +72,37 @@ void loginPage::signIn()
     password = hash->result();
 
     if (checkPassword(userNameField->text(), password)){
-        welcomePage *window1 = new welcomePage;
-        window1->show();
-        this->close();
+        QString username = userNameField->text();
+        QString val;
+        QFile file;
+        file.setFileName("../gameOne/users.json");
+        file.open(QIODevice::ReadOnly | QIODevice::Text);
+        val = file.readAll();
+        file.close();
+
+        QJsonDocument doc;
+        doc = QJsonDocument::fromJson(val.toUtf8());
+
+        QJsonObject jObj = doc.object();
+        jObj = jObj["users"].toObject();
+
+        //get the user object
+        jObj = jObj[username].toObject();
+        user* activeUser;
+        activeUser = new user(
+                    jObj["first_name"].toString(),
+                    jObj["last_name"].toString(),
+                    username,
+                    password,
+                    jObj["birthdate"].toString(),
+                    jObj["gender"].toString(),
+                    jObj["email"].toString(),
+                    jObj["profile_picture"].toString());
+
+
+       welcomePage *window1 = new welcomePage(activeUser);
+       window1->show();
+       this->close();
     }
     else
     {
@@ -94,7 +122,18 @@ void loginPage::signUp()
 
 void loginPage::playAsGuest()
 {
-    welcomePage *window1 = new welcomePage;
+    user* activeUser;
+    activeUser = new user(
+                "guest",
+                "",
+                "guest",
+                "",
+                "",
+                "",
+                "",
+                ":/static_images/default_pp.png");
+
+    welcomePage *window1 = new welcomePage(activeUser);
     window1->show();
     this->close();
 
