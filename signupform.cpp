@@ -1,5 +1,6 @@
 #include "signupform.h"
 #include "loginpage.h"
+#include "welcomepage.h"
 #include <QCryptographicHash>
 #include <qjsondocument.h>
 
@@ -19,7 +20,7 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     lastNameField = new QLineEdit();
 
     dateOfBirth = new QLabel("Birthdate");
-    dateField = new QCalendarWidget(); //fix this to show more verbose date
+    dateField = new QCalendarWidget();
 
     profilePic = new QLabel("Profile Pic ");
     profilePicField = new QLineEdit();
@@ -81,10 +82,6 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     topGrid->addWidget(profilePicField,6,1);
 
 
-
-    topGrid->addWidget(backButton,10,0);
-    topGrid->addWidget(submitButton,9,0);
-
     topGrid->addItem(new QSpacerItem(0,40),0,0);
     topGrid->addItem(new QSpacerItem(0,40),1,1);
     topGrid->addItem(new QSpacerItem(0,40),2,2);
@@ -92,21 +89,20 @@ signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
     topGrid->addItem(new QSpacerItem(0,40),4,4);
     topGrid->addItem(new QSpacerItem(0,40),5,5);
     topGrid->addItem(new QSpacerItem(0,40),6,6);
-    topGrid->addItem(new QSpacerItem(0,80),7,7);
+    topGrid->addItem(new QSpacerItem(0,40),7,7);
     topGrid->addItem(new QSpacerItem(0,150),8,8);
-    topGrid->addItem(new QSpacerItem(0,40),9,9);
-
-
 
     //end of top grid
 
     //combine all three main elements in vertical box
     mainV->addItem(topGrid);
+    mainV->addWidget(submitButton);
+    mainV->addWidget(backButton);
     mainV->addWidget(error);
     //mainV->addWidget(submitButton);
 
     setLayout(mainV);
-
+    this->resize(this->width(), 30);
     QObject::connect(submitButton, SIGNAL(clicked(bool)), this, SLOT(signUp()));
     QObject::connect(backButton, SIGNAL(clicked(bool)), this, SLOT(goBack()));
 
@@ -156,7 +152,7 @@ void signUpForm::signUp()
     }
     else {
       if ((password == this->confirmPasswordField->text())) {
-       error += "Invalid password; password should consist of at least 8 characters and contain at least one number, upper and lower case letters\n";
+       error += "Invalid password; password should consist of at least 8 characters and contain at \n least one number, upper and lower case letters\n";
        }else{
        error += "passwords don't match";
       }
@@ -187,13 +183,18 @@ void signUpForm::signUp()
         QJsonObject RootObject = doc.object();
         QJsonObject usersObject = RootObject["users"].toObject();
 
-
+        //update JSON
         usersObject.insert(username,newUser);
         RootObject["users"] = usersObject;
         doc.setObject(RootObject);
         file.resize(0);
         file.write(doc.toJson());
         file.close();
+
+        welcomePage *window1 = new welcomePage;
+        window1->show();
+        this->close();
+
 
     }else
     {
@@ -210,6 +211,7 @@ bool signUpForm::validateEmail(QString email){
 }
 
 bool signUpForm::checkUsername(QString username){
+    //return True if Username is unique else returns false
     QString val;
     QFile file;
     file.setFileName("../gameOne/users.json");
@@ -231,5 +233,5 @@ bool signUpForm::checkUsername(QString username){
 void signUpForm::goBack(){
     loginPage *window1 = new loginPage;
     window1->show();
-    this->hide();
+    this->close();
 }

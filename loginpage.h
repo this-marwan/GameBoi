@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QtWidgets>
 #include "signupform.h"
+#include "welcomepage.h"
 
 class loginPage : public QWidget
 {
@@ -31,6 +32,10 @@ public:
 public slots:
     void signIn();
     void signUp();
+    void playAsGuest();
+    bool checkUsername(QString username);
+    bool checkPassword(QString username, QString password);
+
 
 
 private:

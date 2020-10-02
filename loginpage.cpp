@@ -1,5 +1,7 @@
 #include "loginpage.h"
 #include <signupform.h>
+#include <welcomepage.h>
+
 
 loginPage::loginPage(QWidget *parent) : QWidget(parent)
 {
@@ -42,27 +44,107 @@ loginPage::loginPage(QWidget *parent) : QWidget(parent)
 
     QObject::connect(logInButton, SIGNAL(clicked(bool)), this, SLOT(signIn()));
     QObject::connect(signUpButton, SIGNAL(clicked(bool)), this, SLOT(signUp()));
+    QObject::connect(guestButton, SIGNAL(clicked(bool)), this, SLOT(playAsGuest()));
 
 }
 //check this for JSON interactions : https://stackoverflow.com/questions/15893040/how-to-create-read-write-json-files-in-qt5
 
 void loginPage::signIn()
 {
+    //check if a field is missing
+    if (userNameField->text().isEmpty() || passwordField->text().isEmpty()){
+    error->setText("Error: Fill missing fields");
+    error->setVisible(true);
+    return;
+    }
     //check user exists
+    if (checkUsername(userNameField->text())){
     error->setText("Error: Username doesn't exist.");
     error->setVisible(true);
-
+    return;
+    }
     //check if password is correct
-    error->setText("Error: incorrect password.");
-    error->setVisible(true);
+    //hash our password
+
+    QCryptographicHash *hash = new QCryptographicHash(QCryptographicHash::Sha1);
+    QString password = passwordField->text();
+    hash->addData(password.toUtf8());
+    password = hash->result();
+
+    if (checkPassword(userNameField->text(), password)){
+        welcomePage *window1 = new welcomePage;
+        window1->show();
+        this->close();
+    }
+    else
+    {
+        error->setText("Error: incorrect password.");
+        error->setVisible(true);
+        return;
+    }
 };
 
 void loginPage::signUp()
 {
     signUpForm *window1 = new signUpForm;
     window1->show();
-    this->hide();
+    this->close();
 
 };
 
+void loginPage::playAsGuest()
+{
+    welcomePage *window1 = new welcomePage;
+    window1->show();
+    this->close();
+
+};
+
+bool loginPage::checkUsername(QString username){
+    //return fasle if Username exits else returns true
+    QString val;
+    QFile file;
+    file.setFileName("../gameOne/users.json");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = file.readAll();
+    file.close();
+
+    QJsonDocument doc;
+    doc = QJsonDocument::fromJson(val.toUtf8());
+
+    QJsonObject jObj = doc.object();
+    jObj = jObj["users"].toObject();
+    if (jObj.keys().contains(username)){
+        return false;
+    }
+    return true;
+}
+
+bool loginPage::checkPassword(QString username, QString password){
+    //function that checks if given password macths our records
+    //returns true if the passwords match
+    QString val;
+    QFile file;
+    file.setFileName("../gameOne/users.json");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = file.readAll();
+    file.close();
+
+    QJsonDocument doc;
+    doc = QJsonDocument::fromJson(val.toUtf8());
+
+    QJsonObject jObj = doc.object();
+    jObj = jObj["users"].toObject();
+
+    if (jObj.keys().contains(username)){
+        //get the user object
+        jObj = jObj[username].toObject();
+
+        if (password == jObj["password"].toString())
+        {
+            return true;
+        }
+    }
+    return false;
+}
 

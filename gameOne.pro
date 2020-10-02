@@ -4,11 +4,13 @@ QT += core
 SOURCES += \
     loginpage.cpp \
     main.cpp \
-    signupform.cpp
+    signupform.cpp \
+    welcomepage.cpp
 
 HEADERS += \
     loginpage.h \
-    signupform.h
+    signupform.h \
+    welcomepage.h
 
 DISTFILES += \
     users.json
