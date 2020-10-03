@@ -1,37 +1,14 @@
 {
-    "number_of_users": 10,
     "users": {
-        "kim": {
-            "birthdate": "Thu Oct 1 2020",
-            "email": "m@",
-            "first_name": "kim",
-            "gender": "Male",
-            "last_name": "possible",
-            "password": "g���M�C��n��hA�-^�p�",
-            "username": "kim"
-        },
         "marwan": {
-            "birthdate": "23/9/1979",
-            "email": "dummy@mail.com",
+            "birthdate": "Sat Oct 3 2020",
+            "email": "m@m.com",
             "first_name": "marwan",
-            "games": {
-                "COD": {
-                    "highscore": 10,
-                    "level": 3
-                }
-            },
-            "last_name": "gh"
-        },
-        "mero55": {
-            "birthdate": "Wed Oct 21 2020",
-            "email": "mail@mail.com",
-            "first_name": "Marwan",
-            "gender": "Male",
+            "gender": "Unspecified",
             "last_name": "gh",
             "password": "g���M�C��n��hA�-^�p�",
-            "username": "mero55"
-        },
-        "salah": {
+            "profile_picture": "/home/eece435l/gameboi-3/build-gameOne-Desktop_Qt_5_12_9_GCC_64bit-Debug/userProfilePic/marwan.jpeg",
+            "username": "marwan"
         }
     }
 }
