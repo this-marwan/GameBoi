@@ -14,14 +14,20 @@ class welcomePage : public QWidget
 public:
     explicit welcomePage(user *activeUser = nullptr, QWidget *parent = nullptr);
     user* activeUser;
-    QPushButton* submitButton;
+    QPushButton* gameOne;
+    QPushButton* gameTwo;
+
     QPixmap* profilePicturePath;
     QLabel* profilePicture;
     QLabel* userName;
     QLabel* generic;
+    QLabel* generic1;
 
     QGridLayout* topGrid;
+    QGridLayout* bottomGrid;
+
     QVBoxLayout* mainV;
+
 
 signals:
 };
