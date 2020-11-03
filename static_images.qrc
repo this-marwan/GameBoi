@@ -3,5 +3,6 @@
         <file>static_images/default_pp.png</file>
         <file>static_images/Reversi.png</file>
         <file>static_images/COVID.png</file>
+        <file>static_images/bg.png</file>
     </qresource>
 </RCC>

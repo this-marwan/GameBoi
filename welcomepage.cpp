@@ -3,6 +3,7 @@
 #include <welcomepage.h>
 #include "user.h"
 #include <QPixmap>
+#include "killcovid.h"
 
 welcomePage::welcomePage(user *activeUser, QWidget *parent) : QWidget(parent)
 {
@@ -64,7 +65,20 @@ welcomePage::welcomePage(user *activeUser, QWidget *parent) : QWidget(parent)
     mainV->addItem(bottomGrid);
 
 
-
-
     setLayout(mainV);
+    QObject::connect(gameOne, SIGNAL(clicked(bool)), this, SLOT(startKillCovid()));
+
 }
+
+bool welcomePage::startKillCovid()
+{
+    QGraphicsView* view = new QGraphicsView();
+
+    killCovid* scene1 = new killCovid(this->activeUser);
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
+    view->setScene(scene1);
+    view->setFixedSize(400,640);
+    view->show();
+
+};

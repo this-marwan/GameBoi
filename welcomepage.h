@@ -28,6 +28,10 @@ public:
 
     QVBoxLayout* mainV;
 
+public slots:
+//    bool settings();
+    bool startKillCovid();
+//    bool checkPassword(QString username, QString password);
 
 signals:
 };
