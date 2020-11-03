@@ -8,7 +8,8 @@
         <file>static_images/killCovid/syringe-solid.png</file>
         <file>static_images/killCovid/virus-solid.png</file>
         <file>static_images/killCovid/tint-solid.png</file>
-        <file>static_images/killCovid/heart-solid.svg</file>
         <file>static_images/killCovid/bolt-solid.svg</file>
+        <file>static_images/killCovid/heart-solid.png</file>
+        <file>static_images/killCovid/heart-solid-dead.png</file>
     </qresource>
 </RCC>

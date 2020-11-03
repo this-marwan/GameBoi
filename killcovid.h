@@ -25,13 +25,20 @@ public:
     QGraphicsPixmapItem* settingsButton;
     Player* player;
     QPropertyAnimation* m_anim;
+    QGraphicsPixmapItem* heart1;
+    QGraphicsPixmapItem* heart2;
+    QGraphicsPixmapItem* heart3;
+
     QString state;
     //possiblbe states:
     //mainMenu - when you first start the game
     //pause - tmeporarily pause the game
     //playing - when the player is playing the game
+    //gameOver - when the game ends
+    int lives;
 
 public slots:
+    void lifeLost();
     void createVirus();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void keyPressEvent(QKeyEvent*event);

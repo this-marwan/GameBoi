@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include "stdio.h"
 #include "virus.h"
+#include "killcovid.h"
+#include "vaccine.h"
+#include "qdebug.h"
 
 virus::virus(QObject *parent) : QObject(parent)
 {
@@ -13,19 +16,38 @@ virus::virus(QObject *parent) : QObject(parent)
     int randomPosition = rand()%350;
     this->setPos(randomPosition,0);
     this->setZValue(10);
-    QTimer*timer = new QTimer(this);
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(20);
+    this->timer = new QTimer(this);
+    QObject::connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
+    this->timer->start(100);
 
+}
+
+void virus::die(){
 }
 
 void virus::update()
 {
     int x = this->x();
     int y = this->y();
-    if (y > 1000 || !scene()->collidingItems(this).isEmpty()){
+
+    QList<QGraphicsItem *> list = collidingItems() ;
+
+    foreach(QGraphicsItem * i , list)
+    {
+        vaccine * item= dynamic_cast<vaccine *>(i);
+        if (item)
+        {
+            scene()->removeItem(this);
+            delete this;
+            return;
+        }
+    }
+
+
+    if (y > scene()->height() ){
         scene()->removeItem(this);
+        emit virusMissed();
         delete this;
     }
-    this->setPos(x,y+5);
+    this->setPos(x,y+10);
 }

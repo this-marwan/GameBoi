@@ -7,6 +7,7 @@ scrollingBg::scrollingBg(QObject *parent,int start_y, int speed) : QObject(paren
 {
     this->setPixmap((QPixmap(":/static_images/killCovid/bg2.png")).scaled(380,698));
     this->setPos(0,start_y);
+    this->setZValue(-1);
     QTimer*timer = new QTimer(this);
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(scroll()));
     timer->start(speed);

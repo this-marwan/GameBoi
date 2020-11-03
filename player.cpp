@@ -29,7 +29,7 @@ if(event->key() == Qt::Key_Space){
 
 void Player::shoot(){
     vaccine* drop = new class vaccine();
-    drop->setPos(this->x()-20,this->y());
+    drop->setPos(this->x()-35,this->y());
     scene()->addItem(drop);
 
 }

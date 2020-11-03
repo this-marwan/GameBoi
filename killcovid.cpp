@@ -7,6 +7,7 @@
 #include <QTimer>
 #include "killcovid.h"
 #include "scrollingbg.h"
+#include "virus.h"
 #include "player.h"
 
 #include "QDebug"
@@ -15,6 +16,26 @@ killCovid::killCovid(user *activeUser, QObject *parent)
 {
     //Set game state
     this->state = "mainMenu";
+
+    //number of lives left
+    this->lives = 3;
+    this->heart1 = new QGraphicsPixmapItem();
+    this->heart1->setPixmap((QPixmap(":/static_images/killCovid/heart-solid.png")).scaled(30,30));
+    this->heart1->setPos(5,5);
+    this->heart1->hide();
+    this->addItem(heart1);
+
+    this->heart2 = new QGraphicsPixmapItem();
+    this->heart2->setPixmap((QPixmap(":/static_images/killCovid/heart-solid.png")).scaled(30,30));
+    this->heart2->setPos(40,5);
+    this->heart2->hide();
+    this->addItem(heart2);
+
+    this->heart3 = new QGraphicsPixmapItem();
+    this->heart3->setPixmap((QPixmap(":/static_images/killCovid/heart-solid.png")).scaled(30,30));
+    this->heart3->setPos(75,5);
+    this->heart3->hide();
+    this->addItem(heart3);
 
     //Create a scrolling background
     scrollingBg* bg =  new scrollingBg();
@@ -48,15 +69,44 @@ killCovid::killCovid(user *activeUser, QObject *parent)
     //When game starts add these
     QTimer *timer = new QTimer(this);
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(createVirus()));
-    timer->start(2000);
+    timer->start(4000);
 
 }
+
+
+void killCovid::lifeLost(){
+
+    this->lives -= 1;
+    if (lives == 2){
+        this->heart3->setPixmap((QPixmap(":/static_images/killCovid/heart-solid-dead.png")).scaled(30,30));
+    } else if (lives == 1)
+    {
+        this->heart2->setPixmap((QPixmap(":/static_images/killCovid/heart-solid-dead.png")).scaled(30,30));
+    }
+    else if (lives <= 0)
+    {
+        this->heart1->setPixmap((QPixmap(":/static_images/killCovid/heart-solid-dead.png")).scaled(30,30));
+    }
+
+    if (lives == 0)
+    {
+        this->state = "gameOver";
+    }
+    qDebug() << "deady";
+}
+
 void killCovid::createVirus(){
 
+    if (this->state == "playing")
+    {
+        virus* virus = new class virus(this);
+        int w = this->width() - 40;
+        int randx = rand()%w;
+        virus->setPos(20+randx ,-10);
+        this->addItem(virus);
+        QObject::connect(virus, SIGNAL(virusMissed()), this, SLOT(lifeLost()));
 
-
-//    rubbish* rubbish = new class rubbish();
-//    this->addItem(rubbish);
+    }
 }
 
 void killCovid::mousePressEvent(QGraphicsSceneMouseEvent *event){
@@ -64,6 +114,11 @@ void killCovid::mousePressEvent(QGraphicsSceneMouseEvent *event){
     {
     //play button pressed
     playButton->hide();//hide button
+
+    this->heart1->show();
+    this->heart2->show();
+    this->heart3->show();
+
     this->player->show();
     this->m_anim->start();
     this->player->setFocus();
