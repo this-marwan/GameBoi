@@ -5,14 +5,14 @@
 #include<QDebug>
 scrollingBg::scrollingBg(QObject *parent,int start_y, int speed) : QObject(parent)
 {
-    this->setPixmap((QPixmap(":/static_images/bg.png")).scaled(380,698));
+    this->setPixmap((QPixmap(":/static_images/killCovid/bg2.png")).scaled(380,698));
     this->setPos(0,start_y);
     QTimer*timer = new QTimer(this);
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(scroll()));
     timer->start(speed);
 
 }
-void scrollingBg::update()
+void scrollingBg::scroll()
 {
     int x = this->x();
     int y = this->y();
@@ -24,6 +24,10 @@ void scrollingBg::update()
     }
     else
     {
-    this->setPos(x,y+5);
+    this->setPos(x,y+2);
     }
+}
+
+void scrollingBg::updateSpeed(int x){
+    this->timer->setInterval(x);
 }

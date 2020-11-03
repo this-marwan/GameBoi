@@ -16,7 +16,8 @@ public:
 signals:
 
 public slots:
-    void update();
+    void scroll();
+    void updateSpeed(int x);
 };
 
 #endif // SCROLLINGBG_H

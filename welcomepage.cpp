@@ -80,5 +80,8 @@ bool welcomePage::startKillCovid()
     view->setScene(scene1);
     view->setFixedSize(400,640);
     view->show();
+    this->hide();
+
+    return true;
 
 };
