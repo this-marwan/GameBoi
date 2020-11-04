@@ -12,6 +12,9 @@
 #include "scrollingbg.h"
 #include "virus.h"
 #include "player.h"
+#include "welcomepage.h"
+#include "gameover.h"
+
 
 
 #include "QDebug"
@@ -25,12 +28,12 @@ killCovid::killCovid(user *activeUser, QWidget *parent)
     this->state = "mainMenu";
 
     //Start music
-//    this->music = new QMediaPlayer;
-//    this->music->setMedia(QUrl::fromLocalFile(":/static_images/killCovid/bg_audio.mp3"));
-//    this->music->setVolume(50);
-//    this->music->play();
+    //this->music = new QMediaPlayer();
+    //this->music->setMedia(QUrl::fromLocalFile(":/static_images/killCovid/bg_audio.mp3"));
+    //this->music->setVolume(50);
+    //this->music->play();
 
-    //generate sequnce of viruses we will show (sum = 150)
+    //generate sequence of viruses we will show (sum = 150)
     int a = 13;
     int b = 11;
     int c = 8;
@@ -118,19 +121,25 @@ killCovid::killCovid(user *activeUser, QWidget *parent)
 
 }
 void killCovid::endGame(){
-    //add gameOver banner
 
-    //show user their score
 
-    //update user score in database
+    int score = this->score;
 
-    //give them option to exit to main menu
-//    this->parent->show();
-//    delete this;
+    if (score>this->activeUser->highScore)
+    {
+        this->activeUser->highScore = score;
+    }
 
-    //give them option to play again
-    //reset everything
-//    new killCovid(this->activeUser);
+    this->activeUser->currentScore = score;
+
+
+    gameOver *gameover = new gameOver(activeUser);
+    gameover->show();
+    delete views().first();
+    delete this;
+
+    //TODO: update user score in database
+
 }
 
 void killCovid::updateScore(int score){

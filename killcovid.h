@@ -33,6 +33,7 @@ public:
     QGraphicsTextItem* scoreStr;
     QMediaPlayer* music;
 
+
     QString state;
     //possiblbe states:
     //mainMenu - when you first start the game

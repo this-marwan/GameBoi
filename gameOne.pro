@@ -3,6 +3,7 @@ QT += core
  QT += multimedia
 
 SOURCES += \
+    gameover.cpp \
     killcovid.cpp \
     loginpage.cpp \
     main.cpp \
@@ -15,6 +16,7 @@ SOURCES += \
     welcomepage.cpp
 
 HEADERS += \
+    gameover.h \
     killcovid.h \
     loginpage.h \
     player.h \

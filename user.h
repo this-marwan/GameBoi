@@ -40,7 +40,8 @@ class user : public QObject
        this->profilePicture = profilePicture;
     };
 
-    int highScore;
+    int highScore = 0;
+    int currentScore = 0;
 };
 
 #endif // USER_H
