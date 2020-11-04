@@ -9,9 +9,12 @@
 #include "vaccine.h"
 #include "qdebug.h"
 
-virus::virus(int points,QObject *parent) : QObject(parent)
+virus::virus(int points, int speed, QObject *parent) : QObject(parent)
 {
     this->points = points;
+    if(speed <= 0) {speed = 1;};
+    this->speed = speed;
+
     if (points == 3)
     {
     this->setPixmap((QPixmap(":/static_images/killCovid/virus-solid_3.png")).scaled(80,80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -30,7 +33,7 @@ virus::virus(int points,QObject *parent) : QObject(parent)
     this->setZValue(10);
     this->timer = new QTimer(this);
     QObject::connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
-    this->timer->start(10);
+    this->timer->start(speed);
 
 }
 

@@ -7,18 +7,28 @@
 #include <QTimer>
 #include <algorithm>
 #include "random"
-
+#include "QMediaPlayer"
 #include "killcovid.h"
 #include "scrollingbg.h"
 #include "virus.h"
 #include "player.h"
 
+
 #include "QDebug"
 
-killCovid::killCovid(user *activeUser, QObject *parent)
+killCovid::killCovid(user *activeUser, QWidget *parent)
 {
+    this->parent = parent;
+    this->activeUser = activeUser;
+
     //Set game state
     this->state = "mainMenu";
+
+    //Start music
+//    this->music = new QMediaPlayer;
+//    this->music->setMedia(QUrl::fromLocalFile(":/static_images/killCovid/bg_audio.mp3"));
+//    this->music->setVolume(50);
+//    this->music->play();
 
     //generate sequnce of viruses we will show (sum = 150)
     int a = 13;
@@ -80,6 +90,12 @@ killCovid::killCovid(user *activeUser, QObject *parent)
     playButton->setFlag(QGraphicsItem::ItemIsSelectable,true);
     this->addItem(playButton);
 
+    //add how-to panel
+    howTo = new QGraphicsPixmapItem();
+    howTo->setPixmap((QPixmap(":/static_images/killCovid/howTo.png")));
+    howTo->setPos(this->width()/2 - 125,this->height()/2 + 50);
+    this->addItem(howTo);
+
     //add Player
     this->player = new Player();
     this->player->setPos(this->width()/2 - 40,this->height()+10);
@@ -101,12 +117,39 @@ killCovid::killCovid(user *activeUser, QObject *parent)
 
 
 }
+void killCovid::endGame(){
+    //add gameOver banner
+
+    //show user their score
+
+    //update user score in database
+
+    //give them option to exit to main menu
+//    this->parent->show();
+//    delete this;
+
+    //give them option to play again
+    //reset everything
+//    new killCovid(this->activeUser);
+}
 
 void killCovid::updateScore(int score){
-    qDebug() << "points " << score;
 
     this->score += score;
     this->scoreStr->setPlainText(QString("Score: %1").arg(this->score));
+    if (this->score == 150)
+    {
+        this->state = "gameOver";
+        this->endGame();
+    }
+
+    if(this->score > 50){
+        this->speed = 6;
+    }
+
+    if(this->score > 100){
+        this->speed = 3;
+    }
 }
 
 
@@ -128,6 +171,7 @@ void killCovid::lifeLost(int points){
     if (lives == 0)
     {
         this->state = "gameOver";
+        this->endGame();
     }
 
     this->pointSequence.push_back(points);
@@ -140,7 +184,7 @@ void killCovid::createVirus(){
         int newVirusPoint = this->pointSequence.back();
         this->pointSequence.pop_back();
         qDebug() << newVirusPoint;
-        virus* virus = new class virus(newVirusPoint);
+        virus* virus = new class virus(newVirusPoint, this->speed);
         int w = this->width() - 40;
         int randx = rand()%w;
         virus->setPos(20+randx ,-10);
@@ -156,6 +200,7 @@ void killCovid::mousePressEvent(QGraphicsSceneMouseEvent *event){
     {
     //play button pressed
     playButton->hide();//hide button
+    howTo->hide();//hide howTo panel
 
     this->heart1->show();
     this->heart2->show();

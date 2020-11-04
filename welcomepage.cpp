@@ -74,7 +74,7 @@ bool welcomePage::startKillCovid()
 {
     QGraphicsView* view = new QGraphicsView();
 
-    killCovid* scene1 = new killCovid(this->activeUser);
+    killCovid* scene1 = new killCovid(this->activeUser,this);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
     view->setScene(scene1);

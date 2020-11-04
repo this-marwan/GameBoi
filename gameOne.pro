@@ -1,5 +1,6 @@
 QT += widgets
 QT += core
+ QT += multimedia
 
 SOURCES += \
     killcovid.cpp \

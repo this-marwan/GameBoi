@@ -13,5 +13,7 @@
         <file>static_images/killCovid/virus-solid_7.png</file>
         <file>static_images/killCovid/virus-solid_5.png</file>
         <file>static_images/killCovid/virus-solid_3.png</file>
+        <file>static_images/killCovid/bg_audio.mp3</file>
+        <file>static_images/killCovid/howTo.png</file>
     </qresource>
 </RCC>
