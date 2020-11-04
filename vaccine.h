@@ -12,6 +12,7 @@ class vaccine : public QObject, public QGraphicsPixmapItem
 public:
     explicit vaccine(QObject *parent = nullptr);
     QTimer *timer;
+
 signals:
 
 public slots:

@@ -28,6 +28,7 @@ public:
     QGraphicsPixmapItem* heart1;
     QGraphicsPixmapItem* heart2;
     QGraphicsPixmapItem* heart3;
+    QGraphicsTextItem* scoreStr;
 
     QString state;
     //possiblbe states:
@@ -35,11 +36,14 @@ public:
     //pause - tmeporarily pause the game
     //playing - when the player is playing the game
     //gameOver - when the game ends
-    int lives;
+    std::vector<int> pointSequence;
+    int lives = 3;
+    int score = 0;
 
 public slots:
-    void lifeLost();
+    void lifeLost(int points);
     void createVirus();
+    void updateScore(int score);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void keyPressEvent(QKeyEvent*event);
 

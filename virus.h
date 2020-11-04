@@ -11,10 +11,12 @@ class virus : public QObject,  public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    explicit virus(QObject *parent = nullptr);
+    explicit virus(int points = 3,QObject *parent = nullptr);
     QTimer *timer;
+    int points;
 signals:
-void virusMissed();
+void virusMissed(int points = 3);
+void virusHit(int points = 3);
 public slots:
     void update();
     void die();

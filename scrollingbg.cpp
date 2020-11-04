@@ -21,11 +21,10 @@ void scrollingBg::scroll()
         x = 0;
         y = 0;
         this->setPos(0,-698);
-        qDebug() << y;
     }
     else
     {
-    this->setPos(x,y+2);
+    this->setPos(x,y+1);
     }
 }
 

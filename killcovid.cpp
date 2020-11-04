@@ -5,6 +5,9 @@
 #include <QGraphicsView>
 #include "QGraphicsPixmapItem"
 #include <QTimer>
+#include <algorithm>
+#include "random"
+
 #include "killcovid.h"
 #include "scrollingbg.h"
 #include "virus.h"
@@ -16,6 +19,23 @@ killCovid::killCovid(user *activeUser, QObject *parent)
 {
     //Set game state
     this->state = "mainMenu";
+
+    //generate sequnce of viruses we will show (sum = 150)
+    int a = 13;
+    int b = 11;
+    int c = 8;
+    for(int i = 0; i < a; i++){
+    this->pointSequence.push_back(3);
+    }
+    for(int i = 0; i < b; i++){
+    this->pointSequence.push_back(5);
+    }
+    for(int i = 0; i < c; i++){
+    this->pointSequence.push_back(7);
+    }
+    //shuffle our sequence to have a unique game every time
+//    auto rng = std::default_random_engine {20};
+    std::random_shuffle(this->pointSequence.begin(), this->pointSequence.end());
 
     //number of lives left
     this->lives = 3;
@@ -36,6 +56,14 @@ killCovid::killCovid(user *activeUser, QObject *parent)
     this->heart3->setPos(75,5);
     this->heart3->hide();
     this->addItem(heart3);
+
+    //score display
+    this->score = 0;
+    this->scoreStr = new QGraphicsTextItem();
+    this->scoreStr->setPos(5,40);
+    this->scoreStr->setPlainText(QString("Score: %1").arg(this->score));
+    this->scoreStr->hide();
+    this->addItem(scoreStr);
 
     //Create a scrolling background
     scrollingBg* bg =  new scrollingBg();
@@ -69,12 +97,21 @@ killCovid::killCovid(user *activeUser, QObject *parent)
     //When game starts add these
     QTimer *timer = new QTimer(this);
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(createVirus()));
-    timer->start(4000);
+    timer->start(3000);
+
 
 }
 
+void killCovid::updateScore(int score){
+    qDebug() << "points " << score;
 
-void killCovid::lifeLost(){
+    this->score += score;
+    this->scoreStr->setPlainText(QString("Score: %1").arg(this->score));
+}
+
+
+void killCovid::lifeLost(int points){
+    qDebug() << "points2 " << points;
 
     this->lives -= 1;
     if (lives == 2){
@@ -92,19 +129,24 @@ void killCovid::lifeLost(){
     {
         this->state = "gameOver";
     }
-    qDebug() << "deady";
+
+    this->pointSequence.push_back(points);
 }
 
 void killCovid::createVirus(){
 
     if (this->state == "playing")
     {
-        virus* virus = new class virus(this);
+        int newVirusPoint = this->pointSequence.back();
+        this->pointSequence.pop_back();
+        qDebug() << newVirusPoint;
+        virus* virus = new class virus(newVirusPoint);
         int w = this->width() - 40;
         int randx = rand()%w;
         virus->setPos(20+randx ,-10);
         this->addItem(virus);
-        QObject::connect(virus, SIGNAL(virusMissed()), this, SLOT(lifeLost()));
+        QObject::connect(virus, SIGNAL(virusMissed(int)), this, SLOT(lifeLost(int)));
+        QObject::connect(virus, SIGNAL(virusHit(int)), this, SLOT(updateScore(int)));
 
     }
 }
@@ -119,8 +161,11 @@ void killCovid::mousePressEvent(QGraphicsSceneMouseEvent *event){
     this->heart2->show();
     this->heart3->show();
 
+    this->scoreStr->show();
+
     this->player->show();
     this->m_anim->start();
+
     this->player->setFocus();
     this->state = "playing";
     }

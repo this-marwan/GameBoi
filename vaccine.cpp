@@ -13,7 +13,7 @@ vaccine::vaccine(QObject *parent) : QObject(parent)
 //    this->setZValue(10);
     this->timer = new QTimer(this);
     QObject::connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
-    this->timer->start(20);
+    this->timer->start(10);
 
 }
 
@@ -22,22 +22,23 @@ void vaccine::update()
     int x = this->x();
     int y = this->y();
 
-    QList<QGraphicsItem *> list = collidingItems() ;
+//    QList<QGraphicsItem *> list = collidingItems() ;
 
-    foreach(QGraphicsItem * i , list)
-    {
-        virus * item= dynamic_cast<virus *>(i);
-        if (item)
-        {
-            scene()->removeItem(this);
-            delete i;
-            delete this;
-        }
-    }
+//    foreach(QGraphicsItem * i , list)
+//    {
+//        virus * item= dynamic_cast<virus *>(i);
+//        if (item)
+//        {
+//            scene()->removeItem(this);
+//            delete i;
+//            delete this;
+//            return;
+//        }
+//    }
 
     if (y < -20){
         scene()->removeItem(this);
         delete this;
     }
-    this->setPos(x,y-5);
+    this->setPos(x,y-1);
 }

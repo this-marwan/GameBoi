@@ -11,7 +11,7 @@ class scrollingBg : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    explicit scrollingBg(QObject *parent = nullptr, int start_y = -698,int speed = 80);
+    explicit scrollingBg(QObject *parent = nullptr, int start_y = -698,int speed = 40);
     QTimer *timer;
 signals:
 
