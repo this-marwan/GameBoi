@@ -10,7 +10,7 @@
 #include <QtWidgets>
 #include <QPixmap>
 #include "QMediaPlayer"
-
+#include "QSound"
 #include "user.h"
 #include "player.h"
 
@@ -32,6 +32,7 @@ public:
     QGraphicsPixmapItem* heart3;
     QGraphicsTextItem* scoreStr;
     QMediaPlayer* music;
+    QSound* song;
 
 
     QString state;

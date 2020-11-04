@@ -14,6 +14,8 @@
 #include "player.h"
 #include "welcomepage.h"
 #include "gameover.h"
+#include "QSound"
+#include "QMediaPlaylist"
 
 
 
@@ -28,10 +30,21 @@ killCovid::killCovid(user *activeUser, QWidget *parent)
     this->state = "mainMenu";
 
     //Start music
+    //QMediaPlaylist *playlist = new QMediaPlaylist();
+    //playlist->addMedia(QUrl(":qrc/static_images/killCovid/bg_audio.wav"));
+    //playlist->setPlaybackMode(QMediaPlaylist::Loop);
+
     //this->music = new QMediaPlayer();
-    //this->music->setMedia(QUrl::fromLocalFile(":/static_images/killCovid/bg_audio.mp3"));
     //this->music->setVolume(50);
+    //this->music->setPlaylist(playlist);
     //this->music->play();
+
+
+
+    this->song = new QSound("qrc:/static_images/killCovid/bg_audio.wav");
+    song->setLoops(-1);
+    song->play();
+
 
     //generate sequence of viruses we will show (sum = 150)
     int a = 13;
@@ -122,6 +135,7 @@ killCovid::killCovid(user *activeUser, QWidget *parent)
 }
 void killCovid::endGame(){
 
+    song->stop();
 
     int score = this->score;
 

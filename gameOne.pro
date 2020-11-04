@@ -1,6 +1,6 @@
 QT += widgets
 QT += core
- QT += multimedia
+QT += multimedia
 
 SOURCES += \
     gameover.cpp \
