@@ -14,6 +14,7 @@ gameOver::gameOver(user *activeUser, QWidget *parent) : QWidget(parent)
 
     this->activeUser = activeUser;
     gameOv = new QLabel();
+    qDebug() << "I'm here3";
 
     gameOv->setText("Game Over!");
 

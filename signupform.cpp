@@ -224,6 +224,9 @@ void signUpForm::signUp()
         newUser["username"] = username;
         newUser["password"] = password;
         newUser["profile_picture"] = finalProfilePicture;
+        newUser["current_score"] = 0;
+        newUser["high_score"] = 0;
+
 
         QJsonObject RootObject = doc.object();
         QJsonObject usersObject = RootObject["users"].toObject();

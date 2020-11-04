@@ -142,29 +142,47 @@ void killCovid::endGame(){
     if (score>this->activeUser->highScore)
     {
         this->activeUser->highScore = score;
+        if (this->activeUser->username != "guest"){ //if not a guest we need to update the database
+
+            //update the user score in the database
+            QString val;
+            QFile file;
+            file.setFileName("../gameOne/users.json");
+            file.open(QIODevice::ReadWrite | QIODevice::Text);
+            val = file.readAll();
+
+            QJsonDocument doc;
+            doc = QJsonDocument::fromJson(val.toUtf8());
+
+            QJsonObject RootObject = doc.object();
+            QJsonObject usersObject = RootObject["users"].toObject();
+            QJsonObject userObject = usersObject[this->activeUser->username].toObject();
+            userObject["high_score"] = score;
+
+            //update JSON
+            userObject.insert("high_score",score);
+            usersObject[this->activeUser->username] = userObject;
+            RootObject["users"] = usersObject;
+            doc.setObject(RootObject);
+
+            file.resize(0);
+            file.write(doc.toJson());
+            file.close();
+        }
     }
 
     this->activeUser->currentScore = score;
 
-
-    gameOver *gameover = new gameOver(activeUser);
+    gameOver *gameover = new gameOver(this->activeUser);
     gameover->show();
     delete views().first();
     delete this;
-
-    //TODO: update user score in database
-
 }
 
 void killCovid::updateScore(int score){
 
     this->score += score;
     this->scoreStr->setPlainText(QString("Score: %1").arg(this->score));
-    if (this->score == 150)
-    {
-        this->state = "gameOver";
-        this->endGame();
-    }
 
     if(this->score > 50){
         this->speed = 6;
@@ -172,6 +190,12 @@ void killCovid::updateScore(int score){
 
     if(this->score > 100){
         this->speed = 3;
+    }
+
+    if (this->score >= 150)
+    {
+        this->state = "gameOver";
+        this->endGame();
     }
 }
 
@@ -242,12 +266,21 @@ void killCovid::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 void killCovid::keyPressEvent(QKeyEvent*event){
     if(event->key() == Qt::Key_F1){
-    //F1 button pressed
-    playButton->hide();//hide button
-    this->player->show();
-    this->m_anim->start();
-    this->player->setFocus();
-    this->state = "playing";
+        //play button pressed
+        playButton->hide();//hide button
+        howTo->hide();//hide howTo panel
+
+        this->heart1->show();
+        this->heart2->show();
+        this->heart3->show();
+
+        this->scoreStr->show();
+
+        this->player->show();
+        this->m_anim->start();
+
+        this->player->setFocus();
+        this->state = "playing";
     }
 
     int x = this->player->x();

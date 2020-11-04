@@ -2,9 +2,11 @@
     "users": {
         "marwan": {
             "birthdate": "Sat Oct 3 2020",
+            "current_score": 0,
             "email": "m@m.com",
             "first_name": "marwan",
             "gender": "Unspecified",
+            "high_score": 150,
             "last_name": "gh",
             "password": "g���M�C��n��hA�-^�p�",
             "profile_picture": "/home/eece435l/gameboi-3/build-gameOne-Desktop_Qt_5_12_9_GCC_64bit-Debug/userProfilePic/marwan.jpeg",

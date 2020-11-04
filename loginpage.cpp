@@ -97,7 +97,9 @@ void loginPage::signIn()
                     jObj["birthdate"].toString(),
                     jObj["gender"].toString(),
                     jObj["email"].toString(),
-                    jObj["profile_picture"].toString());
+                    jObj["profile_picture"].toString(),
+                    jObj["current_score"].toInt(),
+                    jObj["high_score"].toInt());
 
 
        welcomePage *window1 = new welcomePage(activeUser);
@@ -131,7 +133,9 @@ void loginPage::playAsGuest()
                 "",
                 "",
                 "",
-                ":/static_images/default_pp.png");
+                ":/static_images/default_pp.png",
+                0,
+                0);
 
     welcomePage *window1 = new welcomePage(activeUser);
     window1->show();
