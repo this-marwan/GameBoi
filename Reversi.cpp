@@ -251,88 +251,208 @@ void Reversi::placeNewToken(int position){
     int i = 0;
     int j = 0;
     //check the left of the tile
+    bool valid = false;
     i = column - 1;
-    while (i>-1){
+    while (i>-1 && gridState[row][column - 1] != this->activePlayer){  //add an exception that the immediate slot be different
     //check if there is a similar token of the active player
+        if (gridState[row][i] == this->activePlayer){
+            valid = true;
+        }
+        if (gridState[row][i] == 0){
+            break;
+        }
+        i--;
+    }
+    //change tiles now
+        i = column - 1;
+        while (i>-1 && valid){
+        //check if there is a similar token of the active player
 
-        if (gridState[row][i] == this->activePlayer  || gridState[row][column-1] == 0){
-            break;
+            if (gridState[row][i] == this->activePlayer  || gridState[row][i] == 0){
+                break;
+            }
+            gridState[row][i] = this->activePlayer;
+            i--;
         }
-        gridState[row][i] = this->activePlayer;
-        i--;
-    }
+
     //check the right
+    valid = false;
     i = column + 1;
-    while (i<8){
+    while (i<8 && gridState[row][column + 1] != this->activePlayer){
     //check if there is a similar token of the active player
-        if (gridState[row][i] == this->activePlayer  || gridState[row][column+1] == 0){
+        if (gridState[row][i] == this->activePlayer){
+            valid = true;
+        }
+        if (gridState[row][i] == 0){
             break;
         }
-        gridState[row][i] = this->activePlayer;
         i++;
     }
+    //change tiles now
+        i = column + 1;
+        while (i<8 && valid){
+        //check if there is a similar token of the active player
+            if (gridState[row][i] == this->activePlayer  || gridState[row][i] == 0){
+                break;
+            }
+            gridState[row][i] = this->activePlayer;
+            i++;
+        }
+
     //check the top
+    valid = false;
     i = row - 1;
-    while (i>-1){
+    while (i>-1 && gridState[row - 1][column] != this->activePlayer){
     //check if there is a similar token of the active player
-        if (gridState[i][column] == this->activePlayer  || gridState[row-1][column] == 0){
+        if (gridState[i][column] == this->activePlayer){
+            valid = true;
+        }
+        if (gridState[i][column] == 0){
+            break;
+        }
+        i--;
+    }
+        //change tiles now
+        i = row - 1;
+        while (i>-1 && valid){
+    //check if there is a similar token of the active player
+        if (gridState[i][column] == this->activePlayer  || gridState[i][column] == 0){
             break;
         }
         gridState[i][column] = this->activePlayer;
         i--;
     }
+
     //check the bottom
+    valid = false;
     i = row + 1;
-    while (i<8){
+    while (i<8 && gridState[row + 1][column] != this->activePlayer){
     //check if there is a similar token of the active player
-        if (gridState[i][column] == this->activePlayer  || gridState[row+1][column] == 0){
+        if (gridState[i][column] == this->activePlayer){
+            valid = true;
+        }
+        if (gridState[i][column] == 0){
+            break;
+        }
+        i++;
+    }
+        //change the tiles now
+        i = row + 1;
+        while (i<8 && valid){
+    //check if there is a similar token of the active player
+        if (gridState[i][column] == this->activePlayer  || gridState[i][column] == 0){
             break;
         }
         gridState[i][column] = this->activePlayer;
         i++;
     }
+
     //check upper left
+    valid = false;
     i = row - 1;
     j = column - 1;
-    while (i>-1 && j>-1){
+    while (i>-1 && j>-1 && gridState[row - 1][column - 1] != this->activePlayer){
     //check if there is a similar token of the active player
-        if (gridState[i][j] == this->activePlayer  || gridState[row-1][column-1] == 0){
+        if (gridState[i][j] == this->activePlayer){
+            valid = true;
+        }
+        if (gridState[i][j] == 0){
+            break;
+        }
+        i--;
+        j--;
+    }
+       //change tiles now
+        i = row - 1;
+        j = column - 1;
+        while (i>-1 && j>-1 && valid){
+    //check if there is a similar token of the active player
+        if (gridState[i][j] == this->activePlayer  || gridState[i][j] == 0){
             break;
         }
         gridState[i][j] = this->activePlayer;
         i--;
         j--;
     }
+
     //check upper right
+    valid = false;
     i = row - 1;
     j = column + 1;
-    while (i>-1 && j<8){
+    while (i>-1 && j<8 && gridState[row - 1][column + 1] != this->activePlayer){
     //check if there is a similar token of the active player
-        if (gridState[i][j] == this->activePlayer  || gridState[row-1][column+1] == 0){
+        if (gridState[i][j] == this->activePlayer){
+            valid = true;
+        }
+        if (gridState[i][j] == 0){
+            break;
+        }
+        i--;
+        j++;
+    }
+        //change tiles now
+        i = row - 1;
+        j = column + 1;
+        while (i>-1 && j<8 && valid){
+    //check if there is a similar token of the active player
+        if (gridState[i][j] == this->activePlayer  || gridState[i][j] == 0){
             break;
         }
         gridState[i][j] = this->activePlayer;
         i--;
         j++;
     }
-    //check lower right
+
+   //check lower right
+    valid = false;
     i = row + 1;
     j = column + 1;
-    while (i<8 && j<8){
+    while (i<8 && j<8 && gridState[row + 1][column + 1] != this->activePlayer){
     //check if there is a similar token of the active player
-        if (gridState[i][j] == this->activePlayer  || gridState[row+1][column+1] == 0){
+        if (gridState[i][j] == this->activePlayer){
+            valid = true;
+        }
+        if (gridState[i][j] == 0){
             break;
         }
-        gridState[i][j] = this->activePlayer;
         i++;
         j++;
     }
+        //change tiles now
+        i = row + 1;
+        j = column + 1;
+        while (i<8 && j<8 && valid){
+        //check if there is a similar token of the active player
+            if (gridState[i][j] == this->activePlayer  || gridState[i][j] == 0){
+                break;
+            }
+            gridState[i][j] = this->activePlayer;
+            i++;
+            j++;
+        }
+
     //check lower left
+    valid = false;
     i = row + 1;
     j = column - 1;
-    while (i<8 && j>-1){
+    while (i<8 && j>-1 && gridState[row + 1][column - 1] != this->activePlayer){
     //check if there is a similar token of the active player
-        if (gridState[i][j] == this->activePlayer || gridState[row+1][column-1] == 0){
+        if (gridState[i][j] == this->activePlayer){
+            valid = true;
+        }
+
+        if (gridState[i][j] == 0){
+            break;
+        }
+        i++;
+        j--;
+    }
+        //change tiles now
+        i = row + 1;
+        j = column - 1;
+        while (i<8 && j>-1 && valid){
+    //check if there is a similar token of the active player
+        if (gridState[i][j] == this->activePlayer || gridState[i][j] == 0){
              break;
         }
         gridState[i][j] = this->activePlayer;
