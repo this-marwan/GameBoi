@@ -70,31 +70,11 @@ Reversi::Reversi(user *activeUser, QWidget *parent)
     }
 
     this->gridState[3][3] = 1;
-    this->gridState[3][4] = 0;
-    this->gridState[3][3] = 1;
-    this->gridState[4][3] = 0;
+    this->gridState[3][4] = 2;
+    this->gridState[4][4] = 1;
+    this->gridState[4][3] = 2;
 
     this->redrawGrid();
-
-    //number of lives left
-//    this->lives = 3;
-//    this->heart1 = new QGraphicsPixmapItem();
-//    this->heart1->setPixmap((QPixmap(":/static_images/killCovid/heart-solid.png")).scaled(30,30));
-//    this->heart1->setPos(5,5);
-//    this->heart1->hide();
-//    this->addItem(heart1);
-
-//    this->heart2 = new QGraphicsPixmapItem();
-//    this->heart2->setPixmap((QPixmap(":/static_images/killCovid/heart-solid.png")).scaled(30,30));
-//    this->heart2->setPos(40,5);
-//    this->heart2->hide();
-//    this->addItem(heart2);
-
-//    this->heart3 = new QGraphicsPixmapItem();
-//    this->heart3->setPixmap((QPixmap(":/static_images/killCovid/heart-solid.png")).scaled(30,30));
-//    this->heart3->setPos(75,5);
-//    this->heart3->hide();
-//    this->addItem(heart3);
 
 //    //score display
 //    this->score = 0;
@@ -239,10 +219,28 @@ void Reversi::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
 void Reversi::redrawGrid()
 {
-
+    for(int i = 0; i < 8; i++){
+        for (int j = 0; j < 8; j++){
+            if (gridState[i][j] == 1){
+                int tileIndex = j * 8 + i;
+                qDebug() << i << " " << j;
+                gridTiles[tileIndex]->setPixmap((QPixmap(":/static_images/reversi/black_token.png")).scaled(67,67));
+            }
+            else if (gridState[i][j] == 2){
+                int tileIndex = j * 8 + i;
+                gridTiles[tileIndex]->setPixmap((QPixmap(":/static_images/reversi/white_token.png")).scaled(67,67));
+            }
+        }
+    }
 };
-void Reversi::togglePlayers(){
 
+void Reversi::togglePlayers(){
+    if (this->activePlayer == 1){
+        this->activePlayer = 2;
+        }
+    else{
+        this->activePlayer = 1;
+    }
 };
 
 void Reversi::placeNewToken(int position){
@@ -257,7 +255,7 @@ void Reversi::placeNewToken(int position){
     while (i>-1){
     //check if there is a similar token of the active player
 
-        if (gridState[row][i] == this->activePlayer){
+        if (gridState[row][i] == this->activePlayer  || gridState[row][column-1] == 0){
             break;
         }
         gridState[row][i] = this->activePlayer;
@@ -267,7 +265,7 @@ void Reversi::placeNewToken(int position){
     i = column + 1;
     while (i<8){
     //check if there is a similar token of the active player
-        if (gridState[row][i] == this->activePlayer){
+        if (gridState[row][i] == this->activePlayer  || gridState[row][column+1] == 0){
             break;
         }
         gridState[row][i] = this->activePlayer;
@@ -277,7 +275,7 @@ void Reversi::placeNewToken(int position){
     i = row - 1;
     while (i>-1){
     //check if there is a similar token of the active player
-        if (gridState[i][column] == this->activePlayer){
+        if (gridState[i][column] == this->activePlayer  || gridState[row-1][column] == 0){
             break;
         }
         gridState[i][column] = this->activePlayer;
@@ -287,19 +285,18 @@ void Reversi::placeNewToken(int position){
     i = row + 1;
     while (i<8){
     //check if there is a similar token of the active player
-        if (gridState[i][column] == this->activePlayer){
+        if (gridState[i][column] == this->activePlayer  || gridState[row+1][column] == 0){
             break;
         }
         gridState[i][column] = this->activePlayer;
         i++;
     }
-
     //check upper left
     i = row - 1;
     j = column - 1;
     while (i>-1 && j>-1){
     //check if there is a similar token of the active player
-        if (gridState[i][j] == this->activePlayer){
+        if (gridState[i][j] == this->activePlayer  || gridState[row-1][column-1] == 0){
             break;
         }
         gridState[i][j] = this->activePlayer;
@@ -311,7 +308,7 @@ void Reversi::placeNewToken(int position){
     j = column + 1;
     while (i>-1 && j<8){
     //check if there is a similar token of the active player
-        if (gridState[i][j] == this->activePlayer){
+        if (gridState[i][j] == this->activePlayer  || gridState[row-1][column+1] == 0){
             break;
         }
         gridState[i][j] = this->activePlayer;
@@ -323,7 +320,7 @@ void Reversi::placeNewToken(int position){
     j = column + 1;
     while (i<8 && j<8){
     //check if there is a similar token of the active player
-        if (gridState[i][j] == this->activePlayer){
+        if (gridState[i][j] == this->activePlayer  || gridState[row+1][column+1] == 0){
             break;
         }
         gridState[i][j] = this->activePlayer;
@@ -335,7 +332,7 @@ void Reversi::placeNewToken(int position){
     j = column - 1;
     while (i<8 && j>-1){
     //check if there is a similar token of the active player
-        if (gridState[i][j] == this->activePlayer){
+        if (gridState[i][j] == this->activePlayer || gridState[row+1][column-1] == 0){
              break;
         }
         gridState[i][j] = this->activePlayer;
@@ -356,48 +353,62 @@ bool Reversi::checkMoveIsValid(int position){
     int j = 0;
     //check the left of the tile
     i = column - 1;
-    while (i>-1){
+    while (i>-1 && gridState[row][column - 1] != this->activePlayer){ //add an exception that the immediate slot be different
     //check if there is a similar token of the active player
         if (gridState[row][i] == this->activePlayer){
             return true;
+        }
+        if (gridState[row][i] == 0){
+            break;
         }
         i--;
     }
     //check the right
     i = column + 1;
-    while (i<8){
+    while (i<8 && gridState[row][column + 1] != this->activePlayer){
     //check if there is a similar token of the active player
         if (gridState[row][i] == this->activePlayer){
             return true;
+        }
+        if (gridState[row][i] == 0){
+            break;
         }
         i++;
     }
     //check the top
     i = row - 1;
-    while (i>-1){
+    while (i>-1 && gridState[row - 1][column] != this->activePlayer){
     //check if there is a similar token of the active player
         if (gridState[i][column] == this->activePlayer){
             return true;
+        }
+        if (gridState[i][column] == 0){
+            break;
         }
         i--;
     }
     //check the bottom
     i = row + 1;
-    while (i<8){
+    while (i<8 && gridState[row + 1][column] != this->activePlayer){
     //check if there is a similar token of the active player
         if (gridState[i][column] == this->activePlayer){
             return true;
         }
+        if (gridState[i][column] == 0){
+            break;
+        }
         i++;
     }
-
     //check upper left
     i = row - 1;
     j = column - 1;
-    while (i>-1 && j>-1){
+    while (i>-1 && j>-1 && gridState[row - 1][column - 1] != this->activePlayer){
     //check if there is a similar token of the active player
         if (gridState[i][j] == this->activePlayer){
             return true;
+        }
+        if (gridState[i][j] == 0){
+            break;
         }
         i--;
         j--;
@@ -405,10 +416,13 @@ bool Reversi::checkMoveIsValid(int position){
     //check upper right
     i = row - 1;
     j = column + 1;
-    while (i>-1 && j<8){
+    while (i>-1 && j<8 && gridState[row - 1][column + 1] != this->activePlayer){
     //check if there is a similar token of the active player
         if (gridState[i][j] == this->activePlayer){
             return true;
+        }
+        if (gridState[i][j] == 0){
+            break;
         }
         i--;
         j++;
@@ -416,10 +430,13 @@ bool Reversi::checkMoveIsValid(int position){
     //check lower right
     i = row + 1;
     j = column + 1;
-    while (i<8 && j<8){
+    while (i<8 && j<8 && gridState[row + 1][column + 1] != this->activePlayer){
     //check if there is a similar token of the active player
         if (gridState[i][j] == this->activePlayer){
             return true;
+        }
+        if (gridState[i][j] == 0){
+            break;
         }
         i++;
         j++;
@@ -427,10 +444,14 @@ bool Reversi::checkMoveIsValid(int position){
     //check lower left
     i = row + 1;
     j = column - 1;
-    while (i<8 && j>-1){
+    while (i<8 && j>-1 && gridState[row + 1][column - 1] != this->activePlayer){
     //check if there is a similar token of the active player
         if (gridState[i][j] == this->activePlayer){
             return true;
+        }
+
+        if (gridState[i][j] == 0){
+            break;
         }
         i++;
         j--;
