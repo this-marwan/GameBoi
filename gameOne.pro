@@ -3,6 +3,7 @@ QT += core
 QT += multimedia
 
 SOURCES += \
+    Reversi.cpp \
     gameover.cpp \
     killcovid.cpp \
     loginpage.cpp \
@@ -16,10 +17,12 @@ SOURCES += \
     welcomepage.cpp
 
 HEADERS += \
+    Reversi.h \
     gameover.h \
     killcovid.h \
     loginpage.h \
     player.h \
+    reversiPlayer.h \
     scrollingbg.h \
     signupform.h \
     user.h \
@@ -29,6 +32,11 @@ HEADERS += \
 
 DISTFILES += \
     ../../Downloads/bg.png \
+    static_images/reversi/Tokens.png \
+    static_images/reversi/black_token.png \
+    static_images/reversi/gameTwoMusic.wav \
+    static_images/reversi/tile.png \
+    static_images/reversi/white_token.png \
     users.json
 
 RESOURCES += \

@@ -14,7 +14,6 @@ gameOver::gameOver(user *activeUser, QWidget *parent) : QWidget(parent)
 
     this->activeUser = activeUser;
     gameOv = new QLabel();
-    qDebug() << "I'm here3";
 
     gameOv->setText("Game Over!");
 
@@ -45,12 +44,12 @@ gameOver::gameOver(user *activeUser, QWidget *parent) : QWidget(parent)
     bottomGrid->addWidget(tryAgain,0,0);
     bottomGrid->addWidget(mainMenu,0,1);
 
+
     QString s1 = QString::number(this->activeUser->currentScore);
     QString s2 = QString::number(this->activeUser->highScore);
 
     QString ss1 = QString("You scored: %1").arg(s1);
     QString ss2 = QString("HighScore :%2").arg(s2);
-
 
 
     scoreLabel = new QLabel(ss1);
@@ -70,7 +69,6 @@ gameOver::gameOver(user *activeUser, QWidget *parent) : QWidget(parent)
     setLayout(mainV);
     QObject::connect(tryAgain, SIGNAL(clicked(bool)), this, SLOT(tryAgainBool()));
     QObject::connect(mainMenu, SIGNAL(clicked(bool)), this, SLOT(mainMenuBool()));
-
 
 }
 

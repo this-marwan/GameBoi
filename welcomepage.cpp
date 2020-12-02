@@ -4,6 +4,7 @@
 #include "user.h"
 #include <QPixmap>
 #include "killcovid.h"
+#include "Reversi.h"
 
 welcomePage::welcomePage(user *activeUser, QWidget *parent) : QWidget(parent)
 {
@@ -75,6 +76,8 @@ welcomePage::welcomePage(user *activeUser, QWidget *parent) : QWidget(parent)
 
     setLayout(mainV);
     QObject::connect(gameOne, SIGNAL(clicked(bool)), this, SLOT(startKillCovid()));
+    QObject::connect(gameTwo, SIGNAL(clicked(bool)), this, SLOT(startReversi()));
+
 
 }
 
@@ -93,3 +96,21 @@ bool welcomePage::startKillCovid()
     return true;
 
 };
+
+
+bool welcomePage::startReversi()
+{
+    QGraphicsView* view = new QGraphicsView();
+
+    Reversi* scene1 = new Reversi(this->activeUser,this);
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
+    view->setScene(scene1);
+    view->setFixedSize(640,640);
+    view->show();
+    this->hide();
+
+    return true;
+
+};
+

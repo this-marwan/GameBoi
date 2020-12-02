@@ -176,7 +176,7 @@ void killCovid::endGame(){
     gameOver *gameover = new gameOver(this->activeUser);
     gameover->show();
     delete views().first();
-    delete this;
+//    delete this;
 }
 
 void killCovid::updateScore(int score){
@@ -192,7 +192,7 @@ void killCovid::updateScore(int score){
         this->speed = 3;
     }
 
-    if (this->score >= 150)
+    if (this->score == 150)
     {
         this->state = "gameOver";
         this->endGame();

@@ -31,6 +31,7 @@ public:
 public slots:
 //    bool settings();
     bool startKillCovid();
+    bool startReversi();
 //    bool checkPassword(QString username, QString password);
 
 signals:

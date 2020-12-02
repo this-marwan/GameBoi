@@ -16,5 +16,10 @@
         <file>static_images/killCovid/bg_audio.mp3</file>
         <file>static_images/killCovid/howTo.png</file>
         <file>static_images/killCovid/bg_audio.wav</file>
+        <file>static_images/reversi/black_token.png</file>
+        <file>static_images/reversi/gameTwoMusic.wav</file>
+        <file>static_images/reversi/tile.png</file>
+        <file>static_images/reversi/Tokens.png</file>
+        <file>static_images/reversi/white_token.png</file>
     </qresource>
 </RCC>
