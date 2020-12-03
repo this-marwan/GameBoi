@@ -2,7 +2,12 @@
 #include <signupform.h>
 #include <welcomepage.h>
 
-
+/**
+ *\file loginpage.cpp
+ *\brief Page where the user can enter his username and password in order to get authenticated and to log in to his account
+ *
+ * Implements the Log in form
+ */
 loginPage::loginPage(QWidget *parent) : QWidget(parent)
 {
 

@@ -6,6 +6,12 @@
 #include "killcovid.h"
 #include "Reversi.h"
 
+/**
+ *\file signupform.cpp
+ *\brief Home page of our platform
+ *
+ * Implements the welcome page
+ */
 welcomePage::welcomePage(user *activeUser, QWidget *parent) : QWidget(parent)
 {
     this->activeUser = activeUser;

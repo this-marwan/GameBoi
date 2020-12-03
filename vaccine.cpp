@@ -5,7 +5,12 @@
 #include "virus.h"
 
 #include "qdebug.h"
-
+/**
+ *\file vaccine.cpp
+ *\brief The vaccine class for the first game "Kill Covid"
+ *
+ * Takes care of the vaccine's behaviour
+ */
 vaccine::vaccine(QObject *parent) : QObject(parent)
 {
     this->setPixmap((QPixmap(":/static_images/killCovid/tint-solid.png")).scaled(40,40, Qt::KeepAspectRatio, Qt::SmoothTransformation));

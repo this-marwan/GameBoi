@@ -6,6 +6,12 @@
 #include <QTimer>
 #include <QGraphicsScene>
 
+/**
+ *\file virus.h
+ *\brief The virus class for the first game "Kill Covid"
+ *
+ * Generates viruses and takes care of their behaviours
+ */
 
 class virus : public QObject,  public QGraphicsPixmapItem
 {

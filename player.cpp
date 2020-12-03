@@ -1,6 +1,11 @@
 #include "player.h"
 #include "vaccine.h"
-
+/**
+ *\file player.cpp
+ *\brief The player class for the first game "Kill Covid"
+ *
+ * The object of focus which is the player
+ */
 Player::Player(QObject *parent) : QObject(parent)
 {
 

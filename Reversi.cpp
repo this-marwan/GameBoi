@@ -18,7 +18,12 @@
 #include "QDebug"
 
 //To add more pressure to the game, players can start with a preset time limit for their total number of moves
-
+/**
+ *\file reversi.cpp
+ *\brief The Game Scene class of the Second game "Reversi"
+ *
+ * Implements The Game Scene class of Reversi
+ */
 Reversi::Reversi(user *activeUser, QWidget *parent)
 {
     this->parent = parent;

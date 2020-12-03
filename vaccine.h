@@ -6,6 +6,12 @@
 #include <QTimer>
 #include <QGraphicsScene>
 
+/**
+ *\file vaccine.h
+ *\brief The vaccine class for the first game "Kill Covid"
+ *
+ * Takes care of the vaccine's behaviour
+ */
 class vaccine : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT

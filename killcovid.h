@@ -14,6 +14,13 @@
 #include "user.h"
 #include "player.h"
 
+/**
+ *\file killcovid.h
+ *\brief The Game Scene class of the first game "Kill Covid"
+ *
+ * Header for The Game Scene class of Kill Covid
+ */
+
 class killCovid : public QGraphicsScene
 {
     Q_OBJECT

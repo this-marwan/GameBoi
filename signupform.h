@@ -4,7 +4,12 @@
 #include <QObject>
 #include <QWidget>
 #include <QtWidgets>
-
+/**
+ *\file signupform.h
+ *\brief Page where the user can enter his information in order to create an account
+ *
+ * Header for sign up form
+ */
 class signUpForm : public QWidget
 {
     Q_OBJECT

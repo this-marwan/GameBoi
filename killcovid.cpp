@@ -20,7 +20,12 @@
 
 
 #include "QDebug"
-
+/**
+ *\file killcovid.cpp
+ *\brief The Game Scene class of the first game "Kill Covid"
+ *
+ * Implementation of The Game Scene class of Kill Covid
+ */
 killCovid::killCovid(user *activeUser, QWidget *parent)
 {
     this->parent = parent;

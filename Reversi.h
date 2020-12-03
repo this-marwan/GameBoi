@@ -13,6 +13,13 @@
 #include "QSound"
 #include "user.h"
 
+/**
+ *\file reversi.h
+ *\brief The Game Scene class of the Second game "Reversi"
+ *
+ * Header for The Game Scene class of Reversi
+ */
+
 
 class Reversi : public QGraphicsScene
 {

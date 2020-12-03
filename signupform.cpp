@@ -4,7 +4,12 @@
 #include "user.h"
 #include <QCryptographicHash>
 #include <qjsondocument.h>
-
+/**
+ *\file signupform.cpp
+ *\brief Page where the user can enter his information in order to create an account
+ *
+ * Implements the sign up form
+ */
 signUpForm::signUpForm(QWidget *parent) : QWidget(parent)
 {
 

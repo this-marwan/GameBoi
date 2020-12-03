@@ -4,6 +4,12 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ *\file user.h
+ *\brief Takes care of the Authenticated current player's info
+ *
+ * The current user that is logged in
+ */
 class user : public QObject
 {
     Q_OBJECT

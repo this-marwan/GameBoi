@@ -2,7 +2,12 @@
 #include <signupform.h>
 #include <loginpage.h>
 #include <welcomepage.h>
-
+/**
+ *\mainpage Gameboi
+ *\author Marwan Ghamlouch - Kamil Abu Nader
+ *\date 03-12-2020
+ *
+ */
 int main(int argc, char **argv)
 {
     QApplication app (argc, argv);

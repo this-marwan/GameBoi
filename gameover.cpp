@@ -8,7 +8,12 @@
 #include <iostream>
 
 using namespace std;
-
+/**
+ *\file gameover.cpp
+ *\brief What happens when the game of a user ends
+ *
+ * Implementation of what happens when the Game is Over
+ */
 gameOver::gameOver(user *activeUser, QWidget *parent) : QWidget(parent)
 {
 

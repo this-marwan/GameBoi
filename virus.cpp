@@ -8,7 +8,12 @@
 #include "killcovid.h"
 #include "vaccine.h"
 #include "qdebug.h"
-
+/**
+ *\file virus.cpp
+ *\brief The virus class for the first game "Kill Covid"
+ *
+ * Generates viruses and takes care of their behaviours
+ */
 virus::virus(int points, int speed, QObject *parent) : QObject(parent)
 {
     this->points = points;

@@ -7,6 +7,13 @@
 #include "signupform.h"
 #include "welcomepage.h"
 
+/**
+ *\file loginpage.h
+ *\brief Page where the user can enter his username and password in order to get authenticated and to log in to his account
+ *
+ * Header for Log in form
+ */
+
 class loginPage : public QWidget
 {
     Q_OBJECT

@@ -4,6 +4,13 @@
 #include <QtWidgets>
 #include "user.h"
 
+/**
+ *\file gameover.h
+ *\brief What happens when the game of a user ends
+ *
+ * Header for when the Game is Over
+ */
+
 class gameOver : public QWidget
 {
     Q_OBJECT

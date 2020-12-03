@@ -5,6 +5,13 @@
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 
+/**
+ *\file player.h
+ *\brief The player class for the first game "Kill Covid"
+ *
+ * The object of focus which is the player
+ */
+
 class Player : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT

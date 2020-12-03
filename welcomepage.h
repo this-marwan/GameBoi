@@ -8,6 +8,13 @@
 
 #include "user.h"
 
+/**
+ *\file signupform.h
+ *\brief Home page of our platform
+ *
+ * Header for the welcome page
+ */
+
 class welcomePage : public QWidget
 {
     Q_OBJECT

@@ -7,6 +7,13 @@
 #include <QTimer>
 #include <QGraphicsScene>
 
+/**
+ *\file scrollingbg.h
+ *\brief The background of the Kill Covid game that will be scrolling down
+ *
+ * Header for The Scrolling background for the Kill Covid Game
+ */
+
 class scrollingBg : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT

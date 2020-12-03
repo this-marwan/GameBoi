@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include "stdio.h"
 #include<QDebug>
+/**
+ *\file scrollingbg.cpp
+ *\brief The background of the Kill Covid game that will be scrolling down
+ *
+ * Implements The Scrolling background for the Kill Covid Game
+ */
 scrollingBg::scrollingBg(QObject *parent,int start_y, int speed) : QObject(parent)
 {
     this->setPixmap((QPixmap(":/static_images/killCovid/bg2.png")).scaled(380,698));
