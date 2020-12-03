@@ -22,7 +22,6 @@ HEADERS += \
     killcovid.h \
     loginpage.h \
     player.h \
-    reversiPlayer.h \
     scrollingbg.h \
     signupform.h \
     user.h \

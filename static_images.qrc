@@ -26,5 +26,7 @@
         <file>static_images/reversi/playerOnePassiveBoard.png</file>
         <file>static_images/reversi/playerOneActiveBoard.png</file>
         <file>static_images/reversi/playerTwoActiveBoard.png</file>
+        <file>static_images/reversi/returnToMenuButton.png</file>
+        <file>static_images/reversi/playAgainButton.png</file>
     </qresource>
 </RCC>

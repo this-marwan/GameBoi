@@ -11,7 +11,6 @@
 #include "Reversi.h"
 #include "scrollingbg.h"
 #include "virus.h"
-#include "reversiPlayer.h"
 #include "welcomepage.h"
 #include "gameover.h"
 #include "QSound"
@@ -117,22 +116,6 @@ Reversi::Reversi(user *activeUser, QWidget *parent)
     this->playerTwoScoreLabel->setPlainText(QString("Score: %1").arg(this->playerTwoScore));
     this->addItem(playerTwoScoreLabel);
 
-
-    //    this->score = 0;
-//    this->scoreStr = new QGraphicsTextItem();
-//    this->scoreStr->setPos(5,40);
-//    this->scoreStr->setPlainText(QString("Score: %1").arg(this->score));
-//    this->scoreStr->hide();
-//    this->addItem(scoreStr);
-
-//    //Create a scrolling background
-//    scrollingBg* bg =  new scrollingBg();
-//    scrollingBg* bg1 =  new scrollingBg(NULL, -3);
-
-//    this->addItem(bg);
-//    this->addItem(bg1);
-//    this->setSceneRect(0,0,390,620);
-
     //Add play button
     playButton = new QGraphicsPixmapItem();
     playButton->setPixmap((QPixmap(":/static_images/killCovid/play-circle-solid.svg")).scaled(100,100));
@@ -140,6 +123,23 @@ Reversi::Reversi(user *activeUser, QWidget *parent)
     playButton->setFlag(QGraphicsItem::ItemIsSelectable,true);
     this->addItem(playButton);
 
+    //Add try again button
+    playAgainButton = new QGraphicsPixmapItem();
+    playAgainButton->setPixmap((QPixmap(":/static_images/reversi/playAgainButton.png")));
+    playAgainButton->setPos(this->QGraphicsScene::width()/2 + 65,this->QGraphicsScene::height()/2 - 50);
+    playAgainButton->setFlag(QGraphicsItem::ItemIsSelectable,true);
+    playAgainButton->hide();
+    this->addItem(playAgainButton);
+
+    //Add return to main menu button
+    returnToMenuButton = new QGraphicsPixmapItem();
+    returnToMenuButton->setPixmap((QPixmap(":/static_images/reversi/returnToMenuButton.png")));
+    returnToMenuButton->setPos(this->QGraphicsScene::width()/2 - 65,this->QGraphicsScene::height()/2 - 50);
+    returnToMenuButton->setFlag(QGraphicsItem::ItemIsSelectable,true);
+    returnToMenuButton->hide();
+    this->addItem(returnToMenuButton);
+
+    // add background color
     QGraphicsRectItem *rect_item1 = this->addRect(-20,-20,this->width() + 5, this->height() + 20);
     rect_item1->setZValue(-10);
     rect_item1->setBrush(QColor(129, 91, 64));
@@ -160,51 +160,6 @@ Reversi::Reversi(user *activeUser, QWidget *parent)
 
 
 }
-//void Reversi::endGame(){
-
-//    song->stop();
-
-//    int score = this->score;
-
-//    if (score>this->activeUser->highScore)
-//    {
-//        this->activeUser->highScore = score;
-//        if (this->activeUser->username != "guest"){ //if not a guest we need to update the database
-
-//            //update the user score in the database
-//            QString val;
-//            QFile file;
-//            file.setFileName("../gameOne/users.json");
-//            file.open(QIODevice::ReadWrite | QIODevice::Text);
-//            val = file.readAll();
-
-//            QJsonDocument doc;
-//            doc = QJsonDocument::fromJson(val.toUtf8());
-
-//            QJsonObject RootObject = doc.object();
-//            QJsonObject usersObject = RootObject["users"].toObject();
-//            QJsonObject userObject = usersObject[this->activeUser->username].toObject();
-//            userObject["high_score"] = score;
-
-//            //update JSON
-//            userObject.insert("high_score",score);
-//            usersObject[this->activeUser->username] = userObject;
-//            RootObject["users"] = usersObject;
-//            doc.setObject(RootObject);
-
-//            file.resize(0);
-//            file.write(doc.toJson());
-//            file.close();
-//        }
-//    }
-
-//    this->activeUser->currentScore = score;
-
-//    gameOver *gameover = new gameOver(this->activeUser);
-//    gameover->show();
-//    delete views().first();
-////    delete this;
-//}
 
 void Reversi::mousePressEvent(QGraphicsSceneMouseEvent *event){
     if (playButton->isSelected())
@@ -218,8 +173,11 @@ void Reversi::mousePressEvent(QGraphicsSceneMouseEvent *event){
     this->state = "playing";
     showHints(); //changes game state
     redrawGrid(true); //show hints
+
+    togglePlayers(); //changes players
+    togglePlayers(); //changes players
     }
-    else {
+    else if (this->state == "playing"){
         //clicked on tile
         int index = -1;
         QGraphicsItem *item = itemAt(event->scenePos(), QTransform());
@@ -241,9 +199,53 @@ void Reversi::mousePressEvent(QGraphicsSceneMouseEvent *event){
              togglePlayers(); //changes players
              showHints(); //changes game state
              redrawGrid(true);
+             endGame(); //checks if the game has ended
             }
          }
 
+    }
+    else if (this->state == "gameOver"){
+        if (playAgainButton->isSelected())
+        {
+            //play again
+            //reset all variables
+            for(int i = 0; i < 8; i++){
+                for (int j = 0; j < 8; j++){
+                    gridState[i][j] = 0;
+                }
+            }
+
+            this->playerOneScore = 0;
+            this->playerTwoScore = 0;
+            this->playerOneDiscsLeft = 30;
+            this->playerTwoDiscsLeft = 30;
+
+            playAgainButton->hide();
+            returnToMenuButton->hide();
+
+            this->gridState[3][3] = 1;
+            this->gridState[3][4] = 2;
+            this->gridState[4][4] = 1;
+            this->gridState[4][3] = 2;
+
+            this->activePlayer = 1;
+
+            showHints(); //changes game state
+            redrawGrid(true); //show hints
+
+            togglePlayers(); //changes players
+            togglePlayers(); //changes players
+
+            this->redrawGrid(true);
+
+            this->state = "playing";
+        }
+        if (returnToMenuButton->isSelected()){
+            //return us to the main menu
+            welcomePage *window1 = new welcomePage(activeUser);
+            window1->show();
+            delete views().first();
+        }
     }
 }
 
@@ -292,11 +294,59 @@ void Reversi::endGame(){
   //if we are here the game has ended
 
    this->activePlayer = temp;
+   this->state = "gameOver";
+
+  qDebug() << "Game ended";
 
 
+  int score = 0;
+  if (playerOneScore>playerTwoScore)
+  {
+    score = playerOneScore;
+  }
+  else {
+    score = playerTwoScore;
+  }
+
+  //update the database if this is a new highscore
+  if (score>this->activeUser->highScoreReversi)
+  {
+      this->activeUser->highScoreReversi = score;
+      if (this->activeUser->username != "guest"){ //if not a guest we need to update the database
+
+          //update the user score in the database
+          QString val;
+          QFile file;
+          file.setFileName("../gameOne/users.json");
+          file.open(QIODevice::ReadWrite | QIODevice::Text);
+          val = file.readAll();
+
+          QJsonDocument doc;
+          doc = QJsonDocument::fromJson(val.toUtf8());
+
+          QJsonObject RootObject = doc.object();
+          QJsonObject usersObject = RootObject["users"].toObject();
+          QJsonObject userObject = usersObject[this->activeUser->username].toObject();
+          userObject["high_score_reversi"] = score;
+
+          //update JSON
+          userObject.insert("high_score_reversi",score);
+          usersObject[this->activeUser->username] = userObject;
+          RootObject["users"] = usersObject;
+          doc.setObject(RootObject);
+
+          file.resize(0);
+          file.write(doc.toJson());
+          file.close();
+      }
+  }
 
 
+  //show game over banner and the winner
 
+  //show buttons to repeat game or leave
+   playAgainButton -> show();
+   returnToMenuButton -> show();
 }
 
 void Reversi::updateScore(){

@@ -21,6 +21,9 @@ class user : public QObject
 
     int highScore = 0;
     int currentScore = 0;
+
+    int highScoreReversi = 0;
+    int currentScoreReversi = 0;
     user();
 
     user(QString firstName,
@@ -32,7 +35,9 @@ class user : public QObject
     QString email,
     QString profilePicture,
     int currentScore = 0,
-    int highScore = 0)
+    int highScore = 0,
+    int highScoreReversi = 0,
+    int currentScoreReversi = 0)
     {
        this->firstName = firstName;
        this->lastName = lastName;
@@ -44,6 +49,8 @@ class user : public QObject
        this->profilePicture = profilePicture;
        this->currentScore = currentScore;
        this->highScore = highScore;
+       this->currentScoreReversi = currentScoreReversi;
+       this->highScore = highScoreReversi;
     };
 
 };

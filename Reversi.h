@@ -12,7 +12,6 @@
 #include "QMediaPlayer"
 #include "QSound"
 #include "user.h"
-#include "reversiPlayer.h"
 
 
 class Reversi : public QGraphicsScene
@@ -45,17 +44,17 @@ public:
     int playerOneScore = 0;
     int playerTwoScore = 0;
 
-    int playerOneDiscsLeft = 30; //two are already placed for them on the board
-    int playerTwoDiscsLeft = 30;
+    int playerOneDiscsLeft = 3; //two are already placed for them on the board
+    int playerTwoDiscsLeft = 3;
 
 
     QGraphicsPixmapItem* playButton;
+    QGraphicsPixmapItem* playAgainButton;
+    QGraphicsPixmapItem* returnToMenuButton;
+
 
     QTimer *timerOne; //timer for playrOne
     QTimer *timerTwo; //timer for playerTwo
-
-    reversiPlayer* playerOne; //black player
-    reversiPlayer* playerTwo; //white player
 
     int activePlayer = 0; //The player with the active turn now (either one or two)
 

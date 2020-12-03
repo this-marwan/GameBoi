@@ -226,6 +226,8 @@ void signUpForm::signUp()
         newUser["profile_picture"] = finalProfilePicture;
         newUser["current_score"] = 0;
         newUser["high_score"] = 0;
+        newUser["current_score_reversi"] = 0;
+        newUser["high_score_reversi"] = 0;
 
 
         QJsonObject RootObject = doc.object();

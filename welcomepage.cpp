@@ -53,10 +53,10 @@ welcomePage::welcomePage(user *activeUser, QWidget *parent) : QWidget(parent)
     bottomGrid->addWidget(gameTwo,0,1);
 
     QString s1 = QString::number(this->activeUser->highScore);
-//    QString s2 = QString::number(this->activeUser->highScore);
+    QString s2 = QString::number(this->activeUser->highScoreReversi);
 
-    QString ss1 = QString("Top Score: 0\nYour High Score: %1").arg(s1);
-    QString ss2 = QString("Top Score: 0\nYour High Score: 0");
+    QString ss1 = QString("Top Score: %1\nYour High Score: %1").arg(s1);
+    QString ss2 = QString("Top Score: %1\nYour High Score: %1").arg(s2);
 
     generic = new QLabel(ss1);
     generic1 = new QLabel(ss2);
