@@ -21,5 +21,10 @@
         <file>static_images/reversi/tile.png</file>
         <file>static_images/reversi/Tokens.png</file>
         <file>static_images/reversi/white_token.png</file>
+        <file>static_images/reversi/hint.png</file>
+        <file>static_images/reversi/playerTwoPassiveBoard.png</file>
+        <file>static_images/reversi/playerOnePassiveBoard.png</file>
+        <file>static_images/reversi/playerOneActiveBoard.png</file>
+        <file>static_images/reversi/playerTwoActiveBoard.png</file>
     </qresource>
 </RCC>

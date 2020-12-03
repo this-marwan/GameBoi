@@ -35,6 +35,7 @@ DISTFILES += \
     static_images/reversi/Tokens.png \
     static_images/reversi/black_token.png \
     static_images/reversi/gameTwoMusic.wav \
+    static_images/reversi/hint.png \
     static_images/reversi/tile.png \
     static_images/reversi/white_token.png \
     users.json

@@ -25,11 +25,29 @@ public:
 
     //player score board
     QGridLayout* playerBoard;
-    QVBoxLayout* playerOneBox;
-    QVBoxLayout* playerTwoBox;
 
-    QLabel* playerOneLabel;
-    QLabel* playerTwoLabel;
+    QGraphicsPixmapItem* playerOneBox;
+    QGraphicsPixmapItem* playerTwoBox;
+
+    QGraphicsTextItem* playerOneLabel;
+    QGraphicsTextItem* playerTwoLabel;
+
+    QGraphicsTextItem* playerOneScoreLabel;
+    QGraphicsTextItem* playerTwoScoreLabel;
+
+    QGraphicsTextItem* playerOneDiscsLabel;
+    QGraphicsTextItem* playerTwoDiscsLabel;
+
+    QGraphicsTextItem* playerOneTimerLabel;
+    QGraphicsTextItem* playerTwoTimerLabel;
+
+    //player properties
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
+
+    int playerOneDiscsLeft = 30; //two are already placed for them on the board
+    int playerTwoDiscsLeft = 30;
+
 
     QGraphicsPixmapItem* playButton;
 
@@ -57,13 +75,13 @@ public:
     //gameOver - when the game ends
 
 public slots:
-//    void lifeLost(int points);
-//    void createVirus();
-//    void updateScore(int score);
-//    void endGame();
+
+    void endGame();
     void togglePlayers();
     void placeNewToken(int position);
-    void redrawGrid();
+    void redrawGrid(bool hint = false);
+    void showHints();
+    void updateScore();
     bool checkMoveIsValid(int position);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 //    void keyPressEvent(QKeyEvent*event);
