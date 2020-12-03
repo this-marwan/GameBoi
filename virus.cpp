@@ -66,6 +66,7 @@ void virus::update()
         qDebug() << "points2 " << this->points;
         emit virusMissed(this->points);
         delete this;
+        return;
     }
     this->setPos(x,y+1);
 }

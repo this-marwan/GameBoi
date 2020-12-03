@@ -32,7 +32,6 @@ public:
     QGraphicsPixmapItem* heart3;
     QGraphicsTextItem* scoreStr;
     QMediaPlayer* music;
-    QSound* song;
 
 
     QString state;

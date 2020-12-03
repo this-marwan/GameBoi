@@ -92,6 +92,7 @@ bool welcomePage::startKillCovid()
     view->setFixedSize(400,640);
     view->show();
     this->hide();
+    delete this;
 
     return true;
 
@@ -109,7 +110,7 @@ bool welcomePage::startReversi()
     view->setFixedSize(640,640);
     view->show();
     this->hide();
-
+//    this->deleteLater();
     return true;
 
 };

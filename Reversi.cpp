@@ -9,10 +9,7 @@
 #include "random"
 #include "QMediaPlayer"
 #include "Reversi.h"
-#include "scrollingbg.h"
-#include "virus.h"
 #include "welcomepage.h"
-#include "gameover.h"
 #include "QSound"
 #include "QMediaPlaylist"
 
@@ -36,17 +33,14 @@ Reversi::Reversi(user *activeUser, QWidget *parent)
     //The black always moves first.
 
     //Start music
-    this->song = new QSound("qrc:/static_images/reversi/gameTwoMusic.wav");
-    song->setLoops(-1);
-    song->play();
+    QMediaPlaylist *playlist = new QMediaPlaylist();
+    playlist->addMedia(QUrl("qrc:/static_images/reversi/gameTwoMusic.wav"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
 
-
-
-//    playerOneBox->addWidget(playerOneLabel);
-//    playerTwoBox->addWidget(playerTwoLabel);
-
-//    playerBoard->addItem(playerOneBox,0,0);
-//    playerBoard->addItem(playerTwoBox,1,0);
+    this->music = new QMediaPlayer();
+    this->music->setVolume(25);
+    this->music->setPlaylist(playlist);
+    this->music->play();
 
     //set up game board
     int row = 0;
@@ -242,6 +236,7 @@ void Reversi::mousePressEvent(QGraphicsSceneMouseEvent *event){
         }
         if (returnToMenuButton->isSelected()){
             //return us to the main menu
+            this->music->stop();
             welcomePage *window1 = new welcomePage(activeUser);
             window1->show();
             delete views().first();
@@ -689,6 +684,8 @@ void Reversi::placeNewToken(int position){
 
     this->playerOneDiscsLabel->setPlainText(QString("Discs Left: %1").arg(this->playerOneDiscsLeft));
     this->playerTwoDiscsLabel->setPlainText(QString("Discs Left: %1").arg(this->playerTwoDiscsLeft));
+
+    return;
 }
 
 bool Reversi::checkMoveIsValid(int position){

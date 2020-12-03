@@ -39,6 +39,7 @@ void vaccine::update()
     if (y < -20){
         scene()->removeItem(this);
         delete this;
+        return;
     }
     this->setPos(x,y-1);
 }

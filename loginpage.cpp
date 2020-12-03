@@ -66,10 +66,9 @@ void loginPage::signIn()
     //check if password is correct
     //hash our password
 
-    QCryptographicHash *hash = new QCryptographicHash(QCryptographicHash::Sha1);
     QString password = passwordField->text();
-    hash->addData(password.toUtf8());
-    password = hash->result();
+    QByteArray hash =  QCryptographicHash::hash(password.toUtf8(),QCryptographicHash::Sha1);
+    password = hash;
 
     if (checkPassword(userNameField->text(), password)){
         QString username = userNameField->text();

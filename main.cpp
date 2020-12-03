@@ -17,7 +17,7 @@ int main(int argc, char **argv)
          }
 
 
-    loginPage window;
-    window.show();
+    loginPage *window = new loginPage();
+    window->show();
     return app.exec();
 }

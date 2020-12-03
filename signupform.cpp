@@ -160,9 +160,9 @@ void signUpForm::signUp()
     QString password = this->passwordField->text();
     if ( (password == this->confirmPasswordField->text())
          && passREX.exactMatch(password)) {
-    QCryptographicHash *hash = new QCryptographicHash(QCryptographicHash::Sha1);
-    hash->addData(password.toUtf8());
-    password = hash->result();
+    QString password = passwordField->text();
+    QByteArray hash =  QCryptographicHash::hash(password.toUtf8(),QCryptographicHash::Sha1);
+    password = hash;
     }
     else {
       if ((password == this->confirmPasswordField->text())) {
@@ -256,6 +256,8 @@ void signUpForm::signUp()
         welcomePage *window1 = new welcomePage(activeUser);
         window1->show();
         this->close();
+        delete this;
+        return;
 
 
     }else
