@@ -242,9 +242,10 @@ void Reversi::mousePressEvent(QGraphicsSceneMouseEvent *event){
         if (returnToMenuButton->isSelected()){
             //return us to the main menu
             this->music->stop();
-            welcomePage *window1 = new welcomePage(activeUser);
+            welcomePage *window1 = new welcomePage(this->activeUser);
             window1->show();
-            delete views().first();
+            views().first()->deleteLater();
+            return;
         }
     }
 }

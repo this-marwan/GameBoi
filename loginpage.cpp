@@ -144,6 +144,7 @@ void loginPage::playAsGuest()
     welcomePage *window1 = new welcomePage(activeUser);
     window1->show();
     this->close();
+    this->deleteLater();
 
 };
 

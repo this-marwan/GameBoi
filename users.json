@@ -14,6 +14,20 @@
             "profile_picture": ":/static_images/default_pp.png",
             "username": "human"
         },
+        "maggi": {
+            "birthdate": "Sun Dec 13 2020",
+            "current_score": 0,
+            "current_score_reversi": 0,
+            "email": "ma@ma.com",
+            "first_name": "homer",
+            "gender": "Male",
+            "high_score": 0,
+            "high_score_reversi": 0,
+            "last_name": "simpson",
+            "password": "123qweASD",
+            "profile_picture": ":/static_images/default_pp.png",
+            "username": "maggi"
+        },
         "man": {
             "birthdate": "Mon Dec 21 2020",
             "current_score": 0,
@@ -76,7 +90,7 @@
             "email": "m@m.com",
             "first_name": "marwan",
             "gender": "Unspecified",
-            "high_score": 23,
+            "high_score": 36,
             "high_score_reversi": 47,
             "last_name": "gh",
             "password": "g���M�C��n��hA�-^�p�",

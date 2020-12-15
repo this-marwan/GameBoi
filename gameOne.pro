@@ -41,3 +41,5 @@ DISTFILES += \
 
 RESOURCES += \
     static_images.qrc
+
+

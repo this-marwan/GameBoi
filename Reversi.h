@@ -51,8 +51,8 @@ public:
     int playerOneScore = 0;
     int playerTwoScore = 0;
 
-    int playerOneDiscsLeft = 3; //two are already placed for them on the board
-    int playerTwoDiscsLeft = 3;
+    int playerOneDiscsLeft = 30; //two are already placed for them on the board
+    int playerTwoDiscsLeft = 30;
 
 
     QGraphicsPixmapItem* playButton;
