@@ -4,6 +4,7 @@ The project accomodates account creation and log in, and some account personaliz
 
 ## Kill Covid ##
 The first game is a space-invaders-like game 👾 where you try to kill incoming virus "cells".
+
  ![alt text](https://github.com/this-marwan/GameBoi/blob/master/static_images/COVID.png "Game Screen")
 
 Some cool features put in:
